@@ -237,5 +237,5 @@ class ImageDatasetLoader:
             else: 
                 yield images
 
-        if archive_dataset:
-            shutil.rmtree(image_dataset_folder_path)
+        # if archive_dataset:
+        #     shutil.rmtree(image_dataset_folder_path)
