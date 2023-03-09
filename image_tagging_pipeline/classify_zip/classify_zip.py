@@ -123,7 +123,7 @@ def main(
         print("[WARNING] No .json file loaded, calculating embeddings for every image.")
 
     # Get CLIP model, to calculate CLIP embeddings if it's not in .json metadata file.
-    clip_model , preprocess , device = get_clip(clip_model_type= 'ViT-B-32',pretrained= 'openai')
+    clip_model , preprocess , device = get_clip(clip_model_type= 'ViT-L-14',pretrained= 'openai')
 
     # Getting model
     classifier_model = get_classifier_model(model_type, tag)
