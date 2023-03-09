@@ -184,7 +184,7 @@ class ImageDatasetLoader:
             # Check for empty directories and files outside of tag folder, skip it for processing
             files_to_skip = ImageDatasetLoader.get_skipped_files(image_dataset_folder_path, only_sub_dir=True)
             for file in files_to_skip:
-                dataset_files_paths.pop(file)
+                dataset_files_paths.remove(file)
 
         #loop over the files list of the folder. 
         for chunk_pos in range(0, len(dataset_files_paths), batch_size):
