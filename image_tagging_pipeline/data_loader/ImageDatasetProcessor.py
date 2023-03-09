@@ -169,7 +169,7 @@ class ImageDatasetProcessor:
     @staticmethod
     def process_dataset(
         dataset_path: str,
-        output_folder: str = '/output',
+        output_folder: str = './output',
         tagged_dataset: bool = True, 
         clip_model: str = 'ViT-B-32',
         pretrained: str = 'openai',
@@ -202,7 +202,7 @@ class ImageDatasetProcessor:
         """
         
         if not tagged_dataset: 
-            output_folder = os.path.join('/output', 'clip-cache')
+            output_folder = os.path.join('./output', 'clip-cache')
 
         #make sure output directory is created 
         os.makedirs(output_folder, exist_ok = True)
@@ -347,7 +347,7 @@ class ImageDatasetProcessor:
     @staticmethod
     def process(
         input_folder: str,
-        output_folder: str = '/output', 
+        output_folder: str = './output', 
         tagged_dataset: bool = True, 
         clip_model: str = 'ViT-B-32',
         pretrained: str = 'openai',

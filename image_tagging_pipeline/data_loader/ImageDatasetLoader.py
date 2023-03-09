@@ -10,6 +10,7 @@ class ImageDatasetLoader:
     """
     def __init__(self) -> None:
         pass
+
     @staticmethod
     def __list_dir(dir_path: str, recursive: bool = True): 
         """method to list all file paths for a given directory. 
@@ -59,7 +60,7 @@ class ImageDatasetLoader:
         
         
     @staticmethod
-    def __extract_archive(path: str) -> str: 
+    def __extract_archive(path: str, output_directory='./datasets/') -> str: 
         """method to decompress an archive given its path. 
         
         :param path: The archive path to decompress. 
@@ -74,7 +75,7 @@ class ImageDatasetLoader:
         
         output_path = f"{file_name}-decompressed-tmp"
         
-        output_directory = os.path.join('/outputs/tmp' , output_path)
+        output_directory = os.path.join(output_directory , output_path)
         
         #make sure the output dir is found or else create it. 
         os.makedirs(output_directory, exist_ok = True)
@@ -117,37 +118,41 @@ class ImageDatasetLoader:
             return 
 
     @staticmethod
-    def clean_directory(dir_path: str, only_sub_dir: bool = False):
-        """ clean a directory files and folders
-
-        :param dir_path: path to the directory which will be cleaned.
-        :type dir_path: str
-        :param only_sub_dir: an option to make it only sub directories 
-                            for ex: in cleaning pixel-art-tagged folder.
-        :type only_sub_dir: bool
-        :rtype: None
+    def get_skipped_files(dir_path: str, only_sub_dir: bool = False):
+        """ 
+        Functions to check the following to be skipped for further processing:
+        1. Empty directories
+        2. Files without a tag folder (does not have parent directory) 
         """
         
+        files_to_skip = []
+
         for dir in os.listdir(dir_path):
             sub_dir = os.path.join(dir_path, dir)
             
             if os.path.isfile(sub_dir): # It is a file. Check and break if it is outside of tag folder
                 if only_sub_dir: 
                     '''RV: Deletion codes are removed since it should not delete anything. Prompt error instead'''
-                    raise Exception (f'[ERROR: Input dataset contains file outside of tag folder: {sub_dir}]')
+                    #raise Exception (f'[ERROR: Input dataset contains file outside of tag folder: {sub_dir}]')
+                    files_to_skip.append(sub_dir)
+                    print ((f'[WARNING: Input dataset contains file outside of tag folder: {sub_dir}]'))
 
                 ImageDatasetLoader.check_file(sub_dir)
                 continue
 
             if len(os.listdir(sub_dir)) == 0: # Empty folder
                 '''RV: Deletion codes are removed since it should not delete anything. Prompt error instead'''
-                raise Exception (f'[ERROR]: Input dataset contains empty folder: {sub_dir}]')
+                #raise Exception (f'[ERROR]: Input dataset contains empty folder: {sub_dir}]')
+                files_to_skip.append(sub_dir)
+                print (f'[ERROR]: Input dataset contains empty folder: {sub_dir}]')
 
             if os.path.isdir(sub_dir) and only_sub_dir: # move to the sub-directory and clean it.
-                ImageDatasetLoader.clean_directory(sub_dir)
+                ImageDatasetLoader.get_skipped_files(sub_dir)
             else:
                 '''RV: Deletion codes are removed since it should not delete anything. Prompt error instead'''
-                raise Exception ('[ERROR]: Dataset format is possible invalid...]')
+                raise Exception ('[ERROR]: Dataset format is possibly invalid...]')
+
+        return files_to_skip
 
     @staticmethod
     def load(dataset_path: str, tagged_dataset: bool = True,  recursive: bool = True, batch_size: int = 32): 
@@ -173,30 +178,15 @@ class ImageDatasetLoader:
             print("is archive dataset")
             print(f"dataset folder path  = {image_dataset_folder_path}")
         
-        if tagged_dataset: 
-            #clean the dataset
-            ImageDatasetLoader.clean_directory(image_dataset_folder_path, only_sub_dir=True)
-        #get all tags in the dataset. 
-        tags = [tag.lower() for tag in os.listdir(image_dataset_folder_path)]
-        
-        #make sure other-training and other-validation tags are available. 
-        
-#        error = False 
-#        if "other-training" not in tags or len(os.listdir(os.path.join(image_dataset_folder_path, "other-training"))) == 0:
-#            error = "`other-training` folder should be contained in the dataset and not empty"
-#        
-#        if "other-validation" not in tags or len(os.listdir(os.path.join(image_dataset_folder_path, "other-validation"))) == 0: 
-#            error = "`other-validation` folder should be contained in the dataset and not empty"
-#
-#        if  error is not False: 
-#            if archive_dataset: 
-#                shutil.rmtree(image_dataset_folder_path)
-#            raise AssertionError(error)
-            
-        
         dataset_files_paths = ImageDatasetLoader.__list_dir(image_dataset_folder_path, recursive)
-        #loop over the files list of the folder. 
         
+        if tagged_dataset: 
+            # Check for empty directories and files outside of tag folder, skip it for processing
+            files_to_skip = ImageDatasetLoader.get_skipped_files(image_dataset_folder_path, only_sub_dir=True)
+            for file in files_to_skip:
+                dataset_files_paths.pop(file)
+
+        #loop over the files list of the folder. 
         for chunk_pos in range(0, len(dataset_files_paths), batch_size):
 
             files_chunk = dataset_files_paths[chunk_pos: min(chunk_pos + batch_size, len(dataset_files_paths))]
