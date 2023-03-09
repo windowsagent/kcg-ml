@@ -11,7 +11,7 @@ def main(
     bins_number = 10
     out_json = {}
 
-    clip_model , preprocess , device = get_clip(clip_model_type= 'ViT-B-32',pretrained= 'openai')
+    clip_model , preprocess , device = get_clip(clip_model_type= 'ViT-L-14',pretrained= 'openai')
     bins_array = get_bins_array(bins_number) 
     blake2b_hash = file_to_hash(image_path)
 
