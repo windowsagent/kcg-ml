@@ -28,7 +28,7 @@ def get_models_dict():
     '''
     try:
         # Getting models dictionary
-        models_dict = model_api.get_models_dict(models_path=models_path)
+        models_dict = model_api.get_models_dict(models_dir=models_path)
         if len(models_dict) > 0:
             # Creating new dict for return in HTTP request
             models_json = models_dict.copy()

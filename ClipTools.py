@@ -1,4 +1,6 @@
-from stage3.classify_helper_functions import * 
+import sys
+sys.path.insert(0, './image_tagging_pipeline/')
+from classify.classify_helper_functions import * 
 import open_clip
 from typing import Union
 import numpy as np

@@ -224,7 +224,7 @@ def main(
 
     def __insert_zip_into_database(arg1, arg2, arg3, arg4):
         try:
-            cmd = "insert into stage4(file_name, archive_path, type, n_img_content) values ('"+arg1+"', '"+arg2+"', '"+arg3+"', '"+arg4+"')"
+            cmd = "insert into image_tagging_pipeline/classify_zip(file_name, archive_path, type, n_img_content) values ('"+arg1+"', '"+arg2+"', '"+arg3+"', '"+arg4+"')"
             with sqlite3.connect(DATABASE_PATH) as conn:
                 conn.execute(cmd)
                 conn.commit()

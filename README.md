@@ -25,13 +25,13 @@ Process a directory of images (paths to directory of images or an archived datas
 * Process a tagged dataset (in this example is in `./dataset` folder) and save the output into `./output` folder. In addition, the SQLite database named `dataset_cache.sqlite` with table named `dataset_cache` containing file name, hash and file path for dataset images will be created in the `./output` folder. 
 
 ```sh
-python ./stage1/ImageDatasetProcessor.py --input_folder=./dataset 
+python ./image_tagging_pipeline/data_loader/ImageDatasetProcessor.py --input_folder=./dataset 
 ```
 
 * Process a non-tagged dataset (in this example is in `./dataset` folder) and save the output into `./output/clip-cache` folder.  In addition, the SQLite database named `dataset_cache.sqlite` with table named `dataset_cache` containing file name, hash and file path for dataset images will be created in the `./output/clip-cache` folder.
 
 ```sh
-python ./stage1/ImageDatasetProcessor.py --input_folder=./dataset --tagged_dataset=False
+python ./image_tagging_pipeline/data_loader/ImageDatasetProcessor.py --input_folder=./dataset --tagged_dataset=False
 ```
 
 ## CLI Arguments
@@ -84,12 +84,12 @@ In addition, the SQLite database named `score_cache.sqlite` with table named `sc
 ## Example Usage
 
 ```
-python ./stage3/classify.py --directory=./path/to/images/dir --metadata_json=./output/input-metadata.json --model_type=ovr-logistic-regression --tag=pos-character
+python ./image_tagging_pipeline/classify/classify.py --directory=./path/to/images/dir --metadata_json=./output/input-metadata.json --model_type=ovr-logistic-regression --tag=pos-character
 ```
 Or
 
 ```
-python ./stage3/classify.py --directory=./path/to/images/dir --metadata_json=./output/input-metadata.json --output=./output --output_bins=10 --model_type=ovr-logistic-regression --tag=pos-character
+python ./image_tagging_pipeline/classify/classify.py --directory=./path/to/images/dir --metadata_json=./output/input-metadata.json --output=./output --output_bins=10 --model_type=ovr-logistic-regression --tag=pos-character
 ```
 
 > Note that if the `output` folder is not present, the script automatically creates it for you. 
@@ -118,11 +118,11 @@ In addition, the SQLite database named `zip_score_cache.sqlite` with table named
 ## Example Usage
 
 ```
-python ./stage4/classify_zip.py --directory=./path/to/images/dir --metadata_json=./output/input-metadata.json --model_type=ovr-logistic-regression --tag=pos-character
+python ./image_tagging_pipeline/classify_zip/classify_zip.py --directory=./path/to/images/dir --metadata_json=./output/input-metadata.json --model_type=ovr-logistic-regression --tag=pos-character
 ```
 Or
 ```
-python ./stage4/classify_zip.py --directory=./path/to/images/dir --metadata_json=./output/input-metadata.json --output=./output --output_bins=10 --model_type=ovr-logistic-regression --tag=pos-character
+python ./image_tagging_pipeline/classify_zip/classify_zip.py --directory=./path/to/images/dir --metadata_json=./output/input-metadata.json --output=./output --output_bins=10 --model_type=ovr-logistic-regression --tag=pos-character
 ```
 
 > Note that if the `output` folder is not present, the script automatically creates it for you. 

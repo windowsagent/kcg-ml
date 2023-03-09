@@ -1,5 +1,7 @@
-from stage3.classify_helper_functions import *
-from stage2.train_helper_functions import *
+import sys
+sys.path.insert(0, './image_tagging_pipeline/')
+from classify.classify_helper_functions import *
+from train.train_helper_functions import *
 import os 
 from ClipTools import ClipModel
 from typing import Union

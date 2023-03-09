@@ -1,5 +1,6 @@
 import os
 from typing import Iterator 
+from tqdm import tqdm
 from PIL import Image
 import patoolib
 import shutil
@@ -143,7 +144,7 @@ class ImageDatasetLoader:
             if len(os.listdir(sub_dir)) == 0: # Empty folder
                 '''RV: Deletion codes are removed since it should not delete anything. Prompt error instead'''
                 #raise Exception (f'[ERROR]: Input dataset contains empty folder: {sub_dir}]')
-                print (f'[ERROR]: Input dataset contains empty folder: {sub_dir}]')
+                print (f'[WARNING]: Input dataset contains empty folder: {sub_dir}]')
 
             if os.path.isdir(sub_dir) and only_sub_dir: # move to the sub-directory and clean it.
                 ImageDatasetLoader.get_skipped_files(sub_dir)
@@ -186,7 +187,7 @@ class ImageDatasetLoader:
                 dataset_files_paths.remove(file)
 
         #loop over the files list of the folder. 
-        for chunk_pos in range(0, len(dataset_files_paths), batch_size):
+        for chunk_pos in tqdm(range(0, len(dataset_files_paths), batch_size)):
 
             files_chunk = dataset_files_paths[chunk_pos: min(chunk_pos + batch_size, len(dataset_files_paths))]
             

@@ -19,7 +19,7 @@ def get_tag_cache_by_model(tag_cache_path, models_path):
         model_api=ModelApi()
 
         # Getting models
-        ret, models_dict = model_api.get_models_dict(models_path=models_path)
+        ret, models_dict = model_api.get_models_dict(models_dir=models_path)
         '''
         Example stucture of models_dict
         {<model_name>: 
