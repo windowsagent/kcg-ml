@@ -4,7 +4,7 @@ import sqlite3
 import time
 from zipfile import ZipFile
 from PIL import Image
-from stage4.classify_zip_helper_functions import *
+from classify_zip_helper_functions import *
 
 zips_info = []
 

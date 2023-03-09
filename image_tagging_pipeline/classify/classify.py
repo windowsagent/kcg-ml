@@ -3,7 +3,7 @@ import os
 import sqlite3
 import time
 import numpy as np
-from stage3.classify_helper_functions import *
+from classify_helper_functions import *
 
 def main(
         folder_path: str, 

@@ -219,4 +219,6 @@ class ImageDatasetLoader:
                 yield images
 
         if archive_dataset:
-            shutil.rmtree(image_dataset_folder_path)
+            # Dont clear the files, do nothing
+            pass
+            #shutil.rmtree(image_dataset_folder_path)
