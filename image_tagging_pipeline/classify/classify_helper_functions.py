@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, '../')
+sys.path.insert(0, './')
 from PIL import Image
 import os 
 import torch
