@@ -143,7 +143,6 @@ class ImageDatasetLoader:
             if len(os.listdir(sub_dir)) == 0: # Empty folder
                 '''RV: Deletion codes are removed since it should not delete anything. Prompt error instead'''
                 #raise Exception (f'[ERROR]: Input dataset contains empty folder: {sub_dir}]')
-                files_to_skip.append(sub_dir)
                 print (f'[ERROR]: Input dataset contains empty folder: {sub_dir}]')
 
             if os.path.isdir(sub_dir) and only_sub_dir: # move to the sub-directory and clean it.
