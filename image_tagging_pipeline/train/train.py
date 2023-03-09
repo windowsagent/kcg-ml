@@ -84,7 +84,7 @@ def main(
                 elif model_type == 'ovr-svm':
                     classifier = SVC(decision_function_shape='ovo' , probability = True)
                 else:
-                    classifier = LogisticRegressionPytorch(input_dim = 512, output_dim=1)
+                    classifier = LogisticRegressionPytorch(output_dim=1)
             
             if model_type == 'torch-logistic-regression':
                 classifier = train_loop(model = classifier, train_emb=train_emb, train_labels=train_labels)
@@ -177,7 +177,7 @@ def retrain(
                 elif model_type == 'ovr-svm':
                     classifier = SVC(decision_function_shape='ovo' , probability = True)
                 else:
-                    classifier = LogisticRegressionPytorch(input_dim = 512, output_dim=1)
+                    classifier = LogisticRegressionPytorch(output_dim=1)
             
             if model_type == 'torch-logistic-regression':
                 classifier = train_loop(model = classifier, train_emb=train_emb, train_labels=train_labels)
