@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, './image_tagging_pipeline/')
+sys.path.insert(0, './image-tagging-pipeline/')
 from classify.classify_helper_functions import * 
 import open_clip
 from typing import Union

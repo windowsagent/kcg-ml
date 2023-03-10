@@ -15,7 +15,7 @@ classification_model = model_loader_obj.LoadModel("pos-pixel-art", "ovr-svm")
 clip_model = ClipModel() 
 
 # getting tag weight for an image file path.
-tag_weight = classification_model.CalculateTagWeightFromImagefile(os.path.join("test_images", 'example1.jpg'), clip_model)
+tag_weight = classification_model.CalculateTagWeightFromImagefile(os.path.join("test-images", 'example1.jpg'), clip_model)
 
 print(f"tag weight = {tag_weight}")
 

@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, './image_tagging_pipeline/')
+sys.path.insert(0, './image-tagging-pipeline/')
 
 import os
 from tqdm import tqdm 

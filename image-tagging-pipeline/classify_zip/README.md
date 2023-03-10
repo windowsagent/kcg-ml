@@ -11,13 +11,13 @@ In addition, the SQLite database named `zip_score_cache.sqlite` with table named
 ## Installation
 All that's needed to start using classify_zip.py is to install the dependencies using the command
 ```
-pip install -r ./image_tagging_pipeline/classify_zip/requirements.txt
+pip install -r ./image-tagging-pipeline/classify_zip/requirements.txt
 ```
 
 ## Example Usage
 
 ```
-python ./image_tagging_pipeline/classify_zip/classify_zip.py --metadata_json=./output/input-metadata.json --directory=/path/to/images/dir
+python ./image-tagging-pipeline/classify_zip/classify_zip.py --metadata_json=./output/input-metadata.json --directory=/path/to/images/dir
 ```
 
 > Note that if the `output` is not created the script automatically creates it for you. 
