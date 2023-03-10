@@ -15,6 +15,7 @@ import fire
 from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor, as_completed
 import multiprocessing
 from pathlib import Path
+from tqdm import tqdm
 
 class ImageDatasetProcessor: 
     """wrapper that contains the utility methods to process a dataset given its path, that computes the metadata of an image 
@@ -225,7 +226,7 @@ class ImageDatasetProcessor:
         #load the image dataset. 
         try: 
             images_loader = ImageDatasetLoader.load(dataset_path, tagged_dataset, recursive = True, batch_size = batch_size)
-        except AssertionError as error: 
+        except AssertionError as error:
             print(f"[Error] in dataset: {dataset_name} due to the error: {error}")
     
         processed_images_count = 0 
@@ -234,7 +235,7 @@ class ImageDatasetProcessor:
         with torch.no_grad(): 
             
             #loop over the image dataset. 
-            for images_chunk in images_loader: 
+            for images_chunk in images_loader:
                 #preprocess the images batch 
                 preprocessed_chunk = torch.stack([preprocess(image) for image in images_chunk])
                 #compute the metadata of the images batch. 
@@ -266,7 +267,7 @@ class ImageDatasetProcessor:
                     
                     if processed_images_count % 1000 == 0: 
                         print(f"[INFO] dataset {dataset_name} finished processing {processed_images_count} images so far")
-        
+
         if tagged_dataset: 
             dataset_name = "input"
             #save the json file of hash to tags list.

@@ -186,7 +186,8 @@ class ImageDatasetLoader:
             for file in files_to_skip:
                 dataset_files_paths.remove(file)
 
-        #loop over the files list of the folder. 
+        print ('Processing...')
+        #loop over the files list of the folder.
         for chunk_pos in tqdm(range(0, len(dataset_files_paths), batch_size)):
 
             files_chunk = dataset_files_paths[chunk_pos: min(chunk_pos + batch_size, len(dataset_files_paths))]
@@ -201,7 +202,7 @@ class ImageDatasetLoader:
                 except Exception as error: #file is not a valid image.
                     print(f"[WARNING]: image {file_path} was be skipped due to the error {error}")
                     continue
-            
+
             #it's the last element, as it's generator to avoid error when deleting the folder and the file is accessed by another process.
             if archive_dataset and last_chunk:
                 yield images.copy()

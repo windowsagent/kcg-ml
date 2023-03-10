@@ -126,7 +126,7 @@ def create_out_folder(base_dir = './'):
     """
     timestamp = datetime.datetime.now() 
     # RV: Adding base directory
-    image_tagging_folder_name = (f'{base_dir}/tagging_output-{timestamp.year}_{timestamp.month}_{timestamp.day}_{timestamp.hour}_{timestamp.minute}')
+    image_tagging_folder_name = (f'{base_dir}/tagging_output-{timestamp.year}_{timestamp.month}_{timestamp.day}_{timestamp.hour}_{timestamp.minute}_{timestamp.second}')
     return make_dir(image_tagging_folder_name)
 
 def compute_blake2b(image: Image.Image): 
