@@ -1,6 +1,6 @@
 import argparse
 import json
-from cache_tag import TagCache
+from cache_modules.cache_tag import TagCache
 from api_model import ModelApi
 
 
