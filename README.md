@@ -142,7 +142,7 @@ Also you may call `--help` to see the options and their defaults in the cli.
 > A tool to create file cache in the form of SQLite database, add data to and fetch from it. File cache contains attributes for each file in given directory or folder. The attributes for each file are represented by the following fields in file cache SQLite database table: `hash_id`, `file_name`, `path`, `type`, `is_archive`, `n_content` and `container_archive`.
 
 ## Module Description
-The file cache module defined in `cache_file.py` contains the class definition with the following functions:
+The file cache module defined in `./clip_cache/cache_file.py` contains the class definition with the following functions:
 
 * _class_  `cache_file`.__`FileCache`__ - A class to construct file cache object.
 * __`create_file_cache`__(_`out_dir = './output'`_, _`db_name = 'file_cache.sqlite'`_) - Method to create file cache database with default name `file_cache.sqlite` and default location in project `./output` directory. The file cache database will not be created if the database with same name path already exist.
@@ -156,7 +156,7 @@ The file cache module defined in `cache_file.py` contains the class definition w
 
 ```python
 
-from cache_file import FileCache
+from clip_cache.cache_file import FileCache
 
 # Create file cache object
 fileCache = FileCache()
@@ -194,7 +194,7 @@ fileCache.clear_cache('./output/file_cache.sqlite', delete_cache=False)
 > A tool to create, add and fetch CLIP vector data to .sqlite database file. CLIP cache contains CLIP vector data for each image file in given directory or folder. The attributes for each image file are represented by the following fields: `hash_id`, `clip_vector` and `model`.
 
 ## Module Description
-The CLIP cache module defined in `cache_clip.py` contains the class definition with the following functions:
+The CLIP cache module defined in `./clip_cache/cache_clip.py` contains the class definition with the following functions:
 
 * _class_  `cache_clip`.__`ClipCache`__ - A class to construct CLIP cache object.
 * __`create_clip_cache`__(_`out_dir = './output'`_, _`db_name = 'clip_cache.sqlite'`_) - Method to create CLIP cache database with default name `clip_cache.sqlite` and default location in project `./output` directory. The CLIP cache database will not be created if the database with same name path already exist.
@@ -208,7 +208,7 @@ The CLIP cache module defined in `cache_clip.py` contains the class definition w
 
 ```python
 
-from cache_clip import ClipCache
+from clip_cache.cache_clip import ClipCache
 
 # Create CLIP cache object
 clipCache = ClipCache()
@@ -242,7 +242,7 @@ clipCache.clear_cache('./output/clip_cache.sqlite', delete_cache=False)
 > A tool to create, add and fetch image tag data to .sqlite database file. Tag cache contains tag data for each image file in given directory or folder. The attributes for each image file are represented by the following fields: `hash_id` and `tag`.
 
 ## Module Description
-The tag cache module defined in `cache_tag.py` contains the class definition with the following functions:
+The tag cache module defined in `./clip_cache/cache_tag.py` contains the class definition with the following functions:
 
 * _class_  `cache_tag`.__`TagCache`__ - A class to construct tag cache object.
 * __`create_tag_cache`__(_`out_dir = './output'`_, _`db_name = 'tag_cache.sqlite'`_) - Method to create tag cache database with default name `tag_cache.sqlite` and default location in project `./output` directory. The tag cache database will not be created if the database with same name path already exist.
@@ -296,17 +296,17 @@ tagCache.clear_cache('./output/tag_cache.sqlite', delete_cache=False)
 > A web API for getting random image file and show its relevant data as follows: file name, file path, image size, container archive, hash ID, request time and the image itself.
 
 ## Module Description
-The web API module defined in `file_cache_web_api.py` runs FLASK-based server and contains functions to fetch random file from file cache database and returns its respective data (file name, file path, image size, container archive, hash ID, request time and the image itself) based on HTTP request made from web browser.
+The web API module defined in `./clip_cache/file_cache_web_api.py` runs FLASK-based server and contains functions to fetch random file from file cache database and returns its respective data (file name, file path, image size, container archive, hash ID, request time and the image itself) based on HTTP request made from web browser.
 
 ## Usage Example
 
 Start the web API module form CLI. In default, the server runs on host `0.0.0.0` and port `8080`.
 ```
-python file_cache_web_api.py
+python ./clip_cache/file_cache_web_api.py
 ```
 or start the web API in other host and port using `host` and `port` CLI arguments as the follows.
 ```
-python file_cache_web_api.py --host=0.0.0.0 --port=8000
+python ./clip_cache/file_cache_web_api.py --host=0.0.0.0 --port=8000
 ```
 
 Fetch random image from file cache database (created using File Cache Module in `file_cache.py`) specified in `db_path`. The following URL request (made from web browser) will return HTML page containing file name, file path, image size, container archive, hash ID, request time and the image itself. Specify the `db_path` as argument with query string using '?' and its value after `=`.
