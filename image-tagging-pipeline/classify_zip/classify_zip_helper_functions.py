@@ -13,7 +13,7 @@ import json
 import hashlib
 import datetime
 import numpy as np
-from api_model import ModelApi
+from model_api.model_api import ModelApi
 
 def save_json(
               dict_obj,

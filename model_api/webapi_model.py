@@ -2,8 +2,7 @@ import argparse
 import json
 from flask import Flask, request
 
-from api_model import ModelApi
-
+import model_api as api
 
 '''Model Access Web API'''
 
@@ -28,7 +27,7 @@ def get_models_dict():
     '''
     try:
         # Getting models dictionary
-        models_dict = model_api.get_models_dict(models_dir=models_path)
+        models_dict = model_api.get_models_dict()
         if len(models_dict) > 0:
             # Creating new dict for return in HTTP request
             models_json = models_dict.copy()
@@ -63,7 +62,7 @@ if __name__=='__main__':
 
     try:
         # Initializing model api object
-        model_api=ModelApi()
+        model_api=api.ModelApi()
         app.run(host=HOST, port=PORT_NUMBER)
 
     except Exception as e:

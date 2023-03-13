@@ -2,7 +2,7 @@ import os
 import sqlite3
 import json
 from datetime import datetime
-from api_model import ModelApi
+from model_api.model_api import ModelApi
 
 
 class ModelCache(object):
@@ -56,7 +56,7 @@ class ModelCache(object):
         try:
             # Getting models dict from model pickle files in given models_path
             model_api = ModelApi()
-            models_dict = model_api.get_models_dict(models_path)
+            models_dict = model_api.get_models_dict()
             
             if len(models_dict) > 0:
 

@@ -16,7 +16,7 @@ import numpy as np
 import io
 import datetime
 #from model_pytorch_logistic_regression_classifier import LogisticRegressionPytorch
-from api_model import ModelApi
+from model_api.model_api import ModelApi
 
 
 def save_json(
