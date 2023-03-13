@@ -296,17 +296,17 @@ tagCache.clear_cache('./output/tag_cache.sqlite', delete_cache=False)
 > A web API for getting random image file and show its relevant data as follows: file name, file path, image size, container archive, hash ID, request time and the image itself.
 
 ## Module Description
-The web API module defined in `./clip_cache/file_cache_web_api.py` runs FLASK-based server and contains functions to fetch random file from file cache database and returns its respective data (file name, file path, image size, container archive, hash ID, request time and the image itself) based on HTTP request made from web browser.
+The web API module defined in `./web_api/file_cache_webapi/file_cache_web_api.py` runs FLASK-based server and contains functions to fetch random file from file cache database and returns its respective data (file name, file path, image size, container archive, hash ID, request time and the image itself) based on HTTP request made from web browser.
 
 ## Usage Example
 
 Start the web API module form CLI. In default, the server runs on host `0.0.0.0` and port `8080`.
 ```
-python ./clip_cache/file_cache_web_api.py
+python ./web_api/file_cache_webapi/file_cache_web_api.py
 ```
 or start the web API in other host and port using `host` and `port` CLI arguments as the follows.
 ```
-python ./clip_cache/file_cache_web_api.py --host=0.0.0.0 --port=8000
+python ./web_api/file_cache_webapi/file_cache_web_api.py --host=0.0.0.0 --port=8000
 ```
 
 Fetch random image from file cache database (created using File Cache Module in `file_cache.py`) specified in `db_path`. The following URL request (made from web browser) will return HTML page containing file name, file path, image size, container archive, hash ID, request time and the image itself. Specify the `db_path` as argument with query string using '?' and its value after `=`.
@@ -319,15 +319,15 @@ http://127.0.0.1:8080/get_random_img?db_path=./output/file_cache.sqlite
 > An API to list, access and use existing classifier models. Model API contains function that accesses existing classifier model pickle files (in given path) and returns existing classifier model as Python dictionary.
 
 ## Module Description
-The model API defined in `api_model.py` contains the class definition with the following functions:
+The model API defined in `./model_api/model_api.py` contains the class definition with the following functions:
 
-* _class_  `api_model`.__`ModelApi`__ - A class to construct the model loader object.
+* _class_  `model_api`.__`ModelApi`__ - A class to construct the model loader object.
 * __`get_models_dict`__(_`models_path`_) - Method that returns models dictionary for model pickle file in given `models_path`.
 
 ## Usage Example
 ```python
 
-from api_model import ModelApi
+from model_api.model_api import ModelApi
 
 # Create model loader object
 model_api = ModelApi()
@@ -350,16 +350,16 @@ Example stucture of models_dict
 > Web API to list existing classifier models (name, type, training start time and tag string) in JSON format. 
 
 ## Module Description
-The model web API defined in `webapi_model.py` runs FLASK-based server and contains functions to list existing classifier models (name, type, training start time and tag string) in JSON format based on HTTP request made from web browser.
+The model web API defined in `./web_api/model_webapi/webapi_model.py` runs FLASK-based server and contains functions to list existing classifier models (name, type, training start time and tag string) in JSON format based on HTTP request made from web browser.
 
 ## Usage Example
 Start the model web API form CLI. In default, the server runs on host `0.0.0.0` and port `8080`.
 ```
-python webapi_model.py
+python ./web_api/model_webapi/webapi_model.py
 ```
 or start the web API in other host and port using `host` and `port` CLI arguments as the follows.
 ```
-python webapi_model.py --host=0.0.0.0 --port=8000
+python ./web_api/model_webapi/webapi_model.py --host=0.0.0.0 --port=8000
 ```
 
 List existing classifier models (name, type, training start time and tag string)

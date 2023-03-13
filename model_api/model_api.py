@@ -1,6 +1,7 @@
 import os 
 import joblib
 
+
 class ModelApi(object):
 
     def __init__(self, model_path='./output/models/') -> None:
