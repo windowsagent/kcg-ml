@@ -1,9 +1,9 @@
 
 
 ### Pipeline Colab Notebook
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/image-tagging-tools/blob/main/notebooks/image-tagging-tools-examples.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kcg-ml/image-tagging-tools/blob/main/notebooks/image-tagging-tools-examples.ipynb)
 
-You can run the pipeline on google colab using the following [link](https://colab.research.google.com/github/kk-digital/image-tagging-tools/blob/main/notebooks/image-tagging-tools-examples.ipynb)
+You can run the pipeline on google colab using the following [link](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/image-tagging-tools-examples.ipynb)
 
 ## Installation
 All what's needed to start using the pipeline locally is to have python 3.9+ then run the following command
@@ -400,23 +400,23 @@ http://127.0.0.1:8080/get_images_in_tag_score_range?model_name=model-ovr-logisti
 
 Example script of using CLIP vectors to find Similar images in set of images
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/image-tagging-tools/blob/main/notebooks/image_clip_similarity.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/image_clip_similarity.ipynb)
 
-Run the Quality Model App on google colab using the following [link](https://colab.research.google.com/github/kk-digital/image-tagging-tools/blob/main/notebooks/image_clip_similarity.ipynb)
+Run the Quality Model App on google colab using the following [link](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/image_clip_similarity.ipynb)
 
 # Quality Model App
 
 An IPython-based app for quality model.
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/image-tagging-tools/blob/main/quality-model-app/quality-model-app.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/quality-model-app/quality-model-app.ipynb)
 
-Run the Quality Model App on google colab using the following [link](https://colab.research.google.com/github/kk-digital/image-tagging-tools/blob/main/quality-model-app/quality-model-app.ipynb)
+Run the Quality Model App on google colab using the following [link](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/quality-model-app/quality-model-app.ipynb)
 
 
 # Examples for Downloading Data from Mega
 
 Different ways for downloading data from Mega.
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/image-tagging-tools/blob/main/notebooks/mega_download_example.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/mega_download_example.ipynb)
 
-Run the Quality Model App on google colab using the following [link](https://colab.research.google.com/github/kk-digital/image-tagging-tools/blob/main/notebooks/mega_download_example.ipynb)
+Run the Quality Model App on google colab using the following [link](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/mega_download_example.ipynb)
