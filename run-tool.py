@@ -6,7 +6,7 @@ from tqdm import tqdm
 
 from data_loader import ImageDatasetProcessor
 from train.train import main as train_main
-from classify_zip.classify_zip import main as classify_main_zip, zip_gen, list_models, get_clip, create_models_dict, get_single_tag_score
+from classify.classify import main as classify_main_zip, zip_gen, list_models, get_clip, create_models_dict, get_single_tag_score
 
 tagged_dataset_path = '/Volumes/docker/mega/KCG/dataset/pixel-art-tagged-v3.zip'
 dataset_path = '/Volumes/docker/processing_folder/test-tagging/untagged'

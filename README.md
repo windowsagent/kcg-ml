@@ -104,40 +104,6 @@ Also you may call `--help` to see the options and their defaults in the cli.
 * `tag` _[string]_ - _[optional]_ - Tag string (example: `pos-character`, `pos-environmental-space`, etc).
 * `output_bins` _[int]_ - _[optional]_ -  The number of bins of the results for each model.
 
-
-# Stage 4: Classify Data (for ZIP Archives)
-
-> A script for classification models inference given images' `directory` and `metadata_json` .json file. This stage only process .zip (archived) file. It is used if the image data specified in `directory` argument is either in .zip archived format or containing images archived in .zip format. 
-
-## Tool Description
-
-Given a `metadata_json` json file containing embeddings for images and `directory` of images' folder, the script start to loop over every image and make the classification for it using every binary classification model. If the `--output` argument is not specified, the classification / inference result will be placed at `./output/tagging_output` folder. Time stamp will be appended to folder name (for example: `./output/tagging_output_2023_1_21_0_56`).
-
-In addition, the SQLite database named `zip_score_cache.sqlite` with table named `zip_score_cache` containing file name, file path, archive path, type of file, hash, model type, tag name and tag score for given images will be created in the `output` folder. 
-
-## Example Usage
-
-```
-python ./image-tagging-pipeline/classify_zip/classify_zip.py --directory=./path/to/images/dir --metadata_json=./output/input-metadata.json --model_type=ovr-logistic-regression --tag=pos-character
-```
-Or
-```
-python ./image-tagging-pipeline/classify_zip/classify_zip.py --directory=./path/to/images/dir --metadata_json=./output/input-metadata.json --output=./output --output_bins=10 --model_type=ovr-logistic-regression --tag=pos-character
-```
-
-> Note that if the `output` folder is not present, the script automatically creates it for you. 
-Also you may call `--help` to see the options and their defaults in the cli. 
-
-## CLI Arguments
-
-* `directory` _[string]_ - _[required]_ - The path to the images folder or images .zip file. 
-* `metadata_json` _[string]_ - _[required]_ - The path to the metadata json file for CLIP embeddings. 
-* `output` _[string]_ - _[optional]_ - The path to the output directory for the inference results. 
-* `model_type` _[string]_ - _[optional]_ - The type of the model (example: `ovr-logistic-regression`, `ovr-svm`, `torch-logistic-regression`)
-* `tag` _[string]_ - _[optional]_ - Tag string (example: `pos-character`, `pos-environmental-space`, etc).
-* `output_bins` _[int]_ - _[optional]_ -  The number of bins of the results for each model.
-
-
 # Dataset File Cache Module
 > A tool to create file cache in the form of SQLite database, add data to and fetch from it. File cache contains attributes for each file in given directory or folder. The attributes for each file are represented by the following fields in file cache SQLite database table: `hash_id`, `file_name`, `path`, `type`, `is_archive`, `n_content` and `container_archive`.
 

@@ -16,6 +16,7 @@ import numpy as np
 import io
 import datetime
 #from model_pytorch_logistic_regression_classifier import LogisticRegressionPytorch
+from zipfile import ZipFile
 from model_api.model_api import ModelApi
 
 
@@ -330,6 +331,37 @@ def clip_image_features(
         return model.encode_image(image).detach().numpy()
 
 
+def clip_image_features_zip(
+                        img,
+                        image_file_name : str,
+                        model, 
+                        preprocess,
+                        device:str
+                        ):
+    """ returns the features of the image using OpenClip
+
+        :param image_path: path to the image to get it's features.
+        :type iamge_path: str
+        :param model: CLIP model object to get the features with.
+        :type model: CLIP model Object
+        :param preprocess: preprocess methods will be applied to the image.
+        :type preprocess: CLIP preprocess object.
+        :param device: device which will be used in calculating the features.
+        :type device: str
+        :returns: CLIP features of the image.
+        :rtype: [1,512] Numpy array.
+    """    
+    with torch.no_grad():
+        
+        if image_file_name.lower().endswith('.gif'): 
+          img_obj = convert_gif_to_image(img)  
+        else:
+          img_obj = img
+
+        image = preprocess(img_obj).unsqueeze(0).to(device)
+        return model.encode_image(image).detach().numpy()
+
+
 def clean_file(file_path):
   """This function takes a file path and see if it is supported or not. 
      suported files : ['.gif','.jpg', '.jpeg', '.png', '.ppm', '.bmp', '.pgm', '.tif', '.tiff', '.webp']
@@ -502,6 +534,63 @@ def classify_single_model_to_bin(
         return None
       
 
+def classify_single_model_to_bin_zip(
+                                  img,
+                                  img_file_name: str,
+                                  model,
+                                  image_features,
+                                  bins_array: List[float],
+                                  image_tagging_folder: str,
+                                  torch_model = False
+                                  ):
+    """classifying image file using only a single model object.
+
+    :param image_file_path: path to the image file.
+    :type image_file_path: str
+    :param model: model's object.
+    :type model: Object (SVM or LogisticRegression)
+    :param model_name: name of the input model.
+    :type model_name: str.
+    :param bins_array: array including the list of the bins for classification.
+    :type bins_array: List[float]
+    :param image_features: CLIP embedding features of the input image.
+    :type image_features: NdArray.
+    """
+    try :
+
+      # Retrieve the classifier
+      classifier = model['classifier']
+      # Get the model type
+      model_type = model['model_type']
+      # Get the tag
+      tag = model['tag']
+      # Model name
+      model_name = f'{model_type}-tag-{tag}'
+
+      # Score
+      image_class_prob     = classify_image_prob(image_features, classifier, torch_model=torch_model) # get the probability list
+      # Get the bins 
+      tag_bin, other_bin   = find_bin(bins_array , image_class_prob) # get the bins 
+
+      # Find the output folder and create it based on model type , tag name 
+      tag_name_out_folder = make_dir([image_tagging_folder, f'{model_type}',f'{tag}',tag_bin])
+    
+      # Copy the file from source to destination 
+      #shutil.copy(image_file_path,tag_name_out_folder)
+      img.save(os.path.join(tag_name_out_folder, os.path.basename(img_file_name)))
+
+      return  { 'model_name' : model_name,
+                'model_type' : model_type,
+                'model_train_date' : model['train_start_time'].strftime('%Y-%m-%d, %H:%M:%S'),
+                'tag'   : tag,
+                'tag_score'   : image_class_prob
+              }
+
+    except Exception as e  :
+        print(f"[ERROR] {e} in file {os.path.basename(img_file_name)} in model {model_name}")
+        return None
+
+
 def classify_to_bin(
                     image_file_path: str,
                     model: dict,
@@ -561,6 +650,66 @@ def classify_to_bin(
     return None 
 
 
+def classify_to_bin_zip(
+                    img,
+                    img_file_name: str,
+                    model: dict,
+                    metadata_json_obj: dict,
+                    image_tagging_folder: str,
+                    bins_array: List[float],
+                    clip_model,
+                    preprocess,
+                    device
+                    ):
+  """classification for a single image through all the models.
+
+  :param image_file_path: path to the image will be classified.
+  :type image-file_path: str
+  :param models_dict: dictionary of all available classification models.
+  :type models_dict: dict
+  :param metadata_json_object: a dictioanry loaded from the .json file.
+  :type  metadata_json_object: dict
+  :param image_tagging_folder: path to the image tagging folder (output folder)
+  :type image_tagging-folder: str
+  :param bins_array: array of all available bins for classification.
+  :type bins_array: List[float]
+  :param clip_model: CLIP model object for getting the image features.
+  :type clip_model. CLIP
+  :param preprocess: preprocessing object for images before getting into CLIP.
+  :type preprocess: Object.
+  :param device: device name
+  :type device: str
+  """
+  try:    
+    # Hash
+    blake2b_hash = file_to_hash_zip(img, img_file_name)
+    # CLIP features
+    try : 
+      image_features = np.array(metadata_json_obj[blake2b_hash]["embeddings_vector"]).reshape(1,-1) # et features from the .json file.
+    except:
+      image_features = clip_image_features_zip(img, img_file_name, clip_model,preprocess,device) # Calculate image features.
+
+    torch_model = 'torch' in model['model_type']
+    # model is a dict with the following structure
+    # {'classifier': <classifier>, 'model_type': <model_type>, 'train_start_time': <train_start_time>, 'tag': <tag_name>}
+    model_result_dict = classify_single_model_to_bin_zip(
+                                                      img,
+                                                      img_file_name,
+                                                      model,
+                                                      image_features,
+                                                      bins_array,
+                                                      image_tagging_folder,
+                                                      torch_model=torch_model
+                                                      )
+    return {'hash_id'  :  blake2b_hash,
+            'file_path': img_file_name,
+            'classifiers_output': model_result_dict}
+
+  except Exception as e :
+    print(f"[ERROR] {e} in file {os.path.basename(img_file_name)}")
+    return None 
+
+
 def file_to_hash(file_path: str):
     """converts file (.gif or else) into blake 2b hash
 
@@ -576,6 +725,24 @@ def file_to_hash(file_path: str):
         print(f"[ERROR]  cannot compute hash for {file_path} , {e}")
         return None 
     return compute_blake2b(Image.open(file_path))
+
+
+def file_to_hash_zip(img, img_file_name):
+    """converts file (.gif or else) into blake 2b hash
+
+    :param file_path: file path to be converted.
+    :type file_path: str
+    :returns: blake 2b hash of the file.
+    :rtype: str
+    """
+    if img_file_name.lower().endswith('.gif'): # If it's GIF then convert to image and exit 
+      try : 
+        return compute_blake2b(convert_gif_to_image(img))
+      except Exception as e:
+        print(f"[ERROR]  cannot compute hash for {img_file_name} , {e}")
+        return None 
+    return compute_blake2b(img)
+
 
 def empty_dirs_check(dir_path : str):
       """ Checking for empty directory"""
@@ -649,6 +816,84 @@ def classify_image_bin(
               mapper['0'].strip() : first_class_bin , 
               mapper['1'].strip() : second_class_bin
             }
+
+
+def get_single_tag_score(
+                    img,
+                    img_file_name: str,
+                    model: dict,
+                    clip_model,
+                    preprocess,
+                    device
+                    ):
+  try:    
+    image_features = clip_image_features_zip(img, img_file_name, clip_model,preprocess,device) # Calculate image features.
+    #for model_name in model_dict:
+    # Take the classifier from model
+    classifier = model['classifier']
+    torch_model = 'torch' in model['model_type']
+    image_class_prob = classify_image_prob(image_features, classifier, torch_model=torch_model) # get the probability list
+    return image_class_prob
+
+  except Exception as e :
+    print(f"[ERROR] {e} in file {os.path.basename(img_file_name)}")
+    return None 
+
+
+def zip_gen(zip_file, zips_info=[]):
+    '''Image generator for zip file'''
+
+    print (f'[INFO] Working on ZIP archive: {zip_file}')
+    
+    with ZipFile(zip_file) as archive:
+
+        '''Getting archive details'''
+        # Check the number of content (image file)
+        entries = archive.infolist()
+        n_content =  len([content for content in entries if content.is_dir() ==False])
+        # Appending to the list to be writen to database table
+        zips_info.append([zip_file, n_content])
+
+        for entry in entries:
+            # Do for every content in the zip file
+            if not entry.is_dir():
+                
+                with archive.open(entry) as file:
+
+                    if entry.filename.lower().endswith(('.zip')):
+                        # Another zip file found in the content.
+                        print (f'[INFO] Working on ZIP archive: {zip_file}/{entry.filename}')
+                        # Process the content of the zip file
+                        with ZipFile(file) as sub_archive:
+
+                            '''Getting archive details'''
+                            # Check the number of content
+                            sub_entries = sub_archive.infolist()
+                            n_content =  len([content for content in sub_entries if content.is_dir() ==False])
+                            # Appending to the list to be writen to database table
+                            zips_info.append([f'{zip_file}/{entry.filename}', n_content])
+
+                            for sub_entry in sub_entries:
+                                with sub_archive.open(sub_entry) as sub_file:
+                                    try:
+                                        img = Image.open(sub_file)
+                                        img_file_name = f'{zip_file}/{sub_entry.filename}'
+                                        print (f' Processing: {img_file_name}')
+                                        yield (img, img_file_name)
+                                    except:
+                                        print (f'[WWARNING] Failed to open {os.path.join(zip_file, sub_entry.filename)}')
+                                        continue
+                    else:
+                        # Should be image file. Read it.
+                        try:
+                            img = Image.open(file)
+                            img_file_name = entry.filename
+                            print (f' Processing: {img_file_name}')
+                            yield (img, img_file_name)
+                        except:
+                            print (f'[WARNING] Failed to open {entry.filename}')
+                            continue
+                    
 
 class FolderFilter:
 
