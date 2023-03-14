@@ -1,7 +1,7 @@
 
 
 ### Pipeline Colab Notebook
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kcg-ml/image-tagging-tools/blob/main/notebooks/image-tagging-tools-examples.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/image-tagging-tools-examples.ipynb)
 
 You can run the pipeline on google colab using the following [link](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/image-tagging-tools-examples.ipynb)
 
