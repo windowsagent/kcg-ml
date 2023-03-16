@@ -1,6 +1,6 @@
 import torch
 
-def check_cuda():
+def GetCuda():
     """
     Checks if the system has a CUDA-capable GPU.
 
@@ -18,4 +18,4 @@ def check_cuda():
 
 
 
-check_cuda()   
+GetCuda()
