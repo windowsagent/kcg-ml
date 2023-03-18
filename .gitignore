@@ -136,3 +136,5 @@ dmypy.json
 /output/*
 
 image-tagging-pipeline/classify_zip
+
+.DS_Store
