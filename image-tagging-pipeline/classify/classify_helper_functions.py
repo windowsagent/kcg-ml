@@ -81,7 +81,7 @@ def get_bins_array(bins_number):
 def classify_image_prob(
                     image_features,
                     model,
-                    torch_model=False
+                    torch_model=False,
                     ):
     """calculate the classification prediction giving model and CLIP
     image features.
@@ -95,11 +95,12 @@ def classify_image_prob(
     :returns: value of probbility of a certain image to be in a certain tag.
     :rtype: float
     """
+    device = "cuda" if torch.cuda.is_available() else "cpu"
     if not torch_model:
       prob = model.predict_proba(image_features)[0][0]
     else:
       with torch.no_grad():
-        prob = model(torch.from_numpy(image_features.reshape(1,-1).astype(np.float32))).detach().numpy()[0][0]
+        prob = model(torch.from_numpy(image_features.reshape(1,-1).astype(np.float32)).to(device)).detach().numpy()[0][0]
         prob = 1 - prob
     return prob
 
@@ -830,7 +831,7 @@ def get_single_tag_score(
     image_features = clip_image_features_zip(img, img_file_name, clip_model,preprocess,device) # Calculate image features.
     #for model_name in model_dict:
     # Take the classifier from model
-    classifier = model['classifier']
+    classifier = model['classifier']  
     torch_model = 'torch' in model['model_type']
     image_class_prob = classify_image_prob(image_features, classifier, torch_model=torch_model) # get the probability list
     return image_class_prob
