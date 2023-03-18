@@ -363,6 +363,7 @@ def clip_image_features_zip(
           img_obj = img
 
         image = preprocess(img_obj).unsqueeze(0).to(device)
+        model = model.to(device)
         return model.encode_image(image).detach().numpy()
 
 
