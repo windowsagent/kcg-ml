@@ -101,7 +101,9 @@ def classify_image_prob(
     else:
       with torch.no_grad():
         model = model.to(device)
-        prob = model(torch.from_numpy(image_features.reshape(1,-1).astype(np.float32)).to(device)).detach().numpy()[0][0]
+        print(f"[DEBUG] MODEL: {model}")
+        prob = model(torch.from_numpy(image_features.reshape(1,-1).astype(np.float32)).to(device))
+        prob = prob.detach().numpy()[0][0]
         prob = 1 - prob
     return prob
 
