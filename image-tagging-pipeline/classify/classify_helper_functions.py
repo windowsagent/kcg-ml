@@ -101,7 +101,6 @@ def classify_image_prob(
     else:
       with torch.no_grad():
         model = model.to(device)
-        print(f"[DEBUG] MODEL: {model}")
         prob = model(torch.from_numpy(image_features.reshape(1,-1).astype(np.float32)).to(device))
         prob = prob.detach().numpy()[0][0]
         prob = 1 - prob
@@ -832,14 +831,11 @@ def get_single_tag_score(
                     device
                     ):
   try:    
-    print("[DEBUG] START GETTING IMAGE FEATURES")
     image_features = clip_image_features_zip(img, img_file_name, clip_model,preprocess,device) # Calculate image features.
-    print("[DEBUG] GOT IMAGE FEATURES")
     #for model_name in model_dict:
     # Take the classifier from model
     classifier = model['classifier']  
     torch_model = 'torch' in model['model_type']
-    print("[DEBUG] GOT STARTING CLASSIFY_IMAGE_PROB")
     image_class_prob = classify_image_prob(image_features, classifier, torch_model=torch_model) # get the probability list
     return image_class_prob
 
