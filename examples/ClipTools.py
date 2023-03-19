@@ -19,7 +19,7 @@ class ClipModel:
         if model_name is None or pretrained is None:
             raise ValueError("[ERROR] please enter the model type.")
         
-        open_clip.create_model(model_name = 'ViT-B-32', pretrained= 'openai')
+        open_clip.create_model(model_name = model_name, pretrained= pretrained)
         print("[INFO] Model downloaded succesfully")
     
 
