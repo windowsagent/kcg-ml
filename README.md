@@ -420,3 +420,20 @@ Different ways for downloading data from Mega.
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/mega_download_example.ipynb)
 
 Run the Quality Model App on google colab using the following [link](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/mega_download_example.ipynb)
+
+
+# Commit IPython notebooks to GitHub without including output cells
+To clear the notebook from the commandline, first make sure that you've installed nbstripout in the correct virtualenv. You can do this in the terminal via;
+
+```sh
+pip install nbstripout
+```
+
+Once this is installed (and assuming a notebook called demo.ipynb) you can strip the output from the file by running;
+
+```sh
+nbstripout demo.ipynb
+```
+You can find more information on the github page of the project. (https://github.com/kynan/nbstripout)
+
+
