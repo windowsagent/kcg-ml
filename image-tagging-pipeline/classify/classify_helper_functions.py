@@ -364,7 +364,7 @@ def clip_image_features_zip(
 
         image = preprocess(img_obj).unsqueeze(0).to(device)
         model = model.to(device)
-        return model.encode_image(image).detach().numpy()
+        return model.encode_image(image).cpu().detach().numpy()
 
 
 def clean_file(file_path):
