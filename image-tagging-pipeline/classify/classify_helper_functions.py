@@ -102,7 +102,7 @@ def classify_image_prob(
       with torch.no_grad():
         model = model.to(device)
         prob = model(torch.from_numpy(image_features.reshape(1,-1).astype(np.float32)).to(device))
-        prob = prob.detach().numpy()[0][0]
+        prob = prob.cpu().detach().numpy()[0][0]
         prob = 1 - prob
     return prob
 
@@ -331,7 +331,8 @@ def clip_image_features(
           img_obj = Image.open(image_path)
 
         image = preprocess(img_obj).unsqueeze(0).to(device)
-        return model.encode_image(image).detach().numpy()
+        model = model.to(device)
+        return model.encode_image(image).cpu().detach().numpy()
 
 
 def clip_image_features_zip(

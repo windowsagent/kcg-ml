@@ -5,11 +5,31 @@
 
 You can run the pipeline on google colab using the following [link](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/image-tagging-tools-examples.ipynb)
 
-## Installation
+## Installing Dependencies
 All what's needed to start using the pipeline locally is to have python 3.9+ then run the following command
 
 ```sh
 pip install -r ./requirements.txt
+```
+## Cleaning Jupyter Notebooks for Version Control
+When working with Jupyter notebooks in a version control system such as Git, it's often useful to remove the output cells from the notebook files before committing them. This keeps the repository clean and reduces the file size.
+
+To clean Jupyter notebooks for version control, we can use the nbstripout and nbconvert tools.
+
+### Installation
+First, make sure you have nbstripout and nbconvert installed . You can install them using pip:
+```sh
+pip install nbstripout nbconvert
+```
+### Setting up nbstripout
+Next, we'll set up nbstripout to automatically clean the notebooks every time we commit them. Run the following command inside repo directory to install the nbstripout Git filter:
+```sh
+nbstripout --install
+```
+### Using nbconvert
+Finally, you can use nbconvert to clean the output cells from the notebooks manually. Run the following command to clean all .ipynb files in the current directory:
+```sh
+python -m nbconvert --ClearOutputPreprocessor.enabled=True --to notebook *.ipynb --inplace
 ```
 
 # Stage 1: Image Dataset Processor
