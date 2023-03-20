@@ -135,6 +135,6 @@ dmypy.json
 /output
 /output/*
 
-image-tagging-pipeline/classify_zip
+clip_linear_probe_pipeline/classify_zip
 
 .DS_Store
