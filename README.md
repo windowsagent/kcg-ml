@@ -1,9 +1,9 @@
 
 
 ### Pipeline Colab Notebook
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/image-tagging-tools-examples.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/example_image_tagging_tools.ipynb)
 
-You can run the pipeline on google colab using the following [link](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/image-tagging-tools-examples.ipynb)
+You can run the pipeline on google colab using the following [link](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/example_image_tagging_tools.ipynb)
 
 ## Installing Dependencies
 All what's needed to start using the pipeline locally is to have python 3.9+ then run the following command
@@ -437,9 +437,9 @@ Run the Quality Model App on google colab using the following [link](https://col
 
 Different ways for downloading data from Mega.
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/mega_download_example.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/example_dataset_download_mega.ipynb)
 
-Run the Quality Model App on google colab using the following [link](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/mega_download_example.ipynb)
+Run the Quality Model App on google colab using the following [link](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/example_dataset_download_mega.ipynb)
 
 
 # Commit IPython notebooks to GitHub without including output cells
