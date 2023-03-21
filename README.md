@@ -4,9 +4,9 @@
 | Notebook Title | Google Colab Link |
 | --- | --- |
 | Image Tagging Pipline | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/example_image_tagging_tools.ipynb)|
-| Clip Example | ![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/example_clip.ipynb) |
-| Clip Cache Example | ![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/example_clip_cache.ipynb) |
-| Clip Image Similarity | ![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/example_image_clip_similarity.ipynb) |
+| Clip Example | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/example_clip.ipynb)|
+| Clip Cache Example | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/example_clip_cache.ipynb) |
+| Clip Image Similarity | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/example_image_clip_similarity.ipynb) |
 
 
 ## Installing Dependencies
