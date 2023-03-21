@@ -126,8 +126,10 @@ class ClipModel:
             print(f"[ERROR] {e}:  cannot compute hash for {img_file_name}")
             return None 
 
-    def encode_zip_file_or_directory(self, data_dir: str):
-        """encoding images in a specific zip file or in a directory"""
+    def encode_data_directory(self, data_dir: str):
+        """encoding images in a specific zip file or in a directory
+        or a dictory of zip files.
+        """
         # Placeholder for data file names
         files_list = []
         
