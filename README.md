@@ -3,8 +3,11 @@
 ### Notebooks
 | Notebook Title | Google Colab Link |
 | --- | --- |
-| Pipline | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/example_image_tagging_tools.ipynb)|
-| Clip Example | You can run the pipeline on google colab using the following [link](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/example_image_tagging_tools.ipynb) |
+| Image Tagging Pipline | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/example_image_tagging_tools.ipynb)|
+| Clip Example | ![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/example_clip.ipynb) |
+| Clip Cache Example | ![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/example_clip_cache.ipynb) |
+| Clip Image Similarity | ![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/example_image_clip_similarity.ipynb) |
+
 
 ## Installing Dependencies
 All what's needed to start using the pipeline locally is to have python 3.9+ then run the following command
