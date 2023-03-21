@@ -7,6 +7,8 @@
 | Clip Example | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/example_clip.ipynb)|
 | Clip Cache Example | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/example_clip_cache.ipynb) |
 | Clip Image Similarity | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/example_image_clip_similarity.ipynb) |
+| Ranking App | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/example_ranking_app.ipynb) |
+
 
 
 ## Installing Dependencies
