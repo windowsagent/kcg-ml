@@ -11,6 +11,7 @@ from PIL import Image
 import torch
 import hashlib
 import json
+import time
 
 class ClipModel:
     ''' ClipModel class to get all clip model , preprocess and device '''
@@ -146,10 +147,12 @@ class ClipModel:
             files_list = [data_dir]
 
         list_of_info = [] # List contains information dict. about each image.
-        for file in files_list:
+        for i, file in enumerate(files_list):
             '''Fetching images'''
+            start_time = time.time() # The start of the zip files
+            img_counter = 0  # Counting the number of images per zip file/directory.
             for img_path, img in self.data_gen(file):
-                print(f'[INFO] Calculating CLIP vector for {img_path}...')
+                # print(f'[INFO] Calculating CLIP vector for {img_path}...')
                 # Compute clip vector
                 clip_vector = self.get_clip_vector(img, file)
                 # Insert image to cache
@@ -161,7 +164,8 @@ class ClipModel:
                     "pretrained": self.pretrained,
                     "clip-vector" : clip_vector.tolist()
                 })
-
+                img_counter += 1
+            print(f"[INFO] ZIP {i+1} OF {len(files_list)}, TIME : {time.time() - start_time:.2f} SECS, {img_counter} IMAGES")
         # Dump json into a clip-scores.json in output directory.
         with open("clip-scores.json", "w") as outfile:
             json.dump(list_of_info, outfile, indent=4)
