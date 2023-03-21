@@ -26,6 +26,10 @@ Next, we'll set up nbstripout to automatically clean the notebooks every time we
 ```sh
 nbstripout --install
 ```
+Alternative installation to git attributes
+```sh
+nbstripout --install --attributes .gitattributes
+```
 ### Using nbconvert
 Finally, you can use nbconvert to clean the output cells from the notebooks manually. Run the following command to clean all .ipynb files in the current directory:
 ```sh
