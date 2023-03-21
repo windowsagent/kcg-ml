@@ -8,20 +8,20 @@ Process a directory of images (paths to directory of images or an archived datas
 To use this tool, use python 3.9+ then install the requirements as follows.
 
 ```sh
-pip install -r ./image-tagging-pipeline/data_loader/requirements.txt
+pip install -r ./clip_linear_probe_pipeline/data_loader/requirements.txt
 ```
 
 ## Example Usage
 * Process a tagged dataset (in this example is in `./dataset` folder) and save the output into `./output` folder. In addition, the SQLite database named `dataset_cache.sqlite` with table named `dataset_cache` containing file name, hash and file path for dataset images will be created in the `./output` folder. 
 
 ```sh
-python ./image-tagging-pipeline/data_loader/ImageDatasetProcessor.py --input_folder=./dataset 
+python ./clip_linear_probe_pipeline/data_loader/ImageDatasetProcessor.py --input_folder=./dataset 
 ```
 
 * Process a non-tagged dataset (in this example is in `./dataset` folder) and save the output into `./output/clip-cache` folder.  In addition, the SQLite database named `dataset_cache.sqlite` with table named `dataset_cache` containing file name, hash and file path for dataset images will be created in the `./output/clip-cache` folder.
 
 ```sh
-python ./image-tagging-pipeline/data_loader/ImageDatasetProcessor.py --input_folder=./dataset --tagged_dataset=False
+python ./clip_linear_probe_pipeline/data_loader/ImageDatasetProcessor.py --input_folder=./dataset --tagged_dataset=False
 ```
 
 ## CLI Arguments
