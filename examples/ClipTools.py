@@ -1,5 +1,6 @@
 import sys
-sys.path.insert(0, './clip_linear_probe_pipeline/')
+sys.path.insert(0, '/content/kcg-ml/clip_linear_probe_pipeline/')
+sys.path.insert(0, '/content/kcg-ml/')
 from classify.classify_helper_functions import * 
 import open_clip
 from typing import Union
@@ -17,7 +18,7 @@ class ClipModel:
         
         self.clip_model = clip_model
         self.pretrained = pretrained
-        self.clip , self.preprocess , self.device = get_clip(self.clip_model, self.pretrained)
+        self.model , self.preprocess , self.device = get_clip(self.clip_model, self.pretrained)
 
     def download_model(self, model_name: str, pretrained: str):
         """ dowload specifc clip model to the machine. """
@@ -30,16 +31,16 @@ class ClipModel:
 
     def encode_image_from_image_file(self,image_file_path: str):
         """ encodes image with CLIP and returns ndArray of image features. """
-        return clip_image_features(image_file_path, self.clip ,self.preprocess,self.device)
+        return clip_image_features(image_file_path, self.model ,self.preprocess,self.device)
 
     def encode_image_from_image_data(self, image_data: Union[bytes,bytearray] ):
         """ enconding image data with CLIP and returns ndArray of image features """
-        return clip_image_features(image_data,self.clip ,self.preprocess,self.device)
+        return clip_image_features(image_data,self.model ,self.preprocess,self.device)
     
     
     def encode_image_list(self,image_list: Union[List[str], List[bytes], List[bytearray]]):
         """encoding a list of images with CLIP and returns a ndArray of all of their embeddings"""
-        return np.stack((clip_image_features(image,self.clip,self.preprocess,self.device) for image in image_list), axis=0)
+        return np.stack((clip_image_features(image,self.model,self.preprocess,self.device) for image in image_list), axis=0)
 
     def empty_dirs_check(self, dir_path):
         """ Checking for empty directory and print out warning if any"""
@@ -66,7 +67,7 @@ class ClipModel:
                 img_obj = img
 
             image = self.preprocess(img_obj).unsqueeze(0).to(self.device)
-            return self.clip_model.encode_image(image).detach().numpy()
+            return self.model.encode_image(image).detach().numpy()
 
     def data_gen(self, data_file):
         '''Image generator for data_file'''
@@ -97,16 +98,16 @@ class ClipModel:
                                             try:
                                                 img = Image.open(sub_file)
                                                 yield (os.path.join(data_file, sub_entry.filename),img) # Changed to tuple (filename, img_obj)
-                                            except:
-                                                print (f'[WWARNING] Failed to fetch {os.path.join(data_file, sub_entry.filename)}')
+                                            except Exception as e:
+                                                print (f'[WWARNING] Failed to fetch {os.path.join(data_file, sub_entry.filename)}; {e}')
                                                 continue
                             else:
                                 # Should be image file. Read it.
                                 try:
                                     img = Image.open(file)
-                                    yield (os.path.join(data_file, sub_entry.filename), img)
-                                except:
-                                    print (f'[WARNING] Failed to fetch {entry.filename}')
+                                    yield (os.path.join(data_file, entry.filename), img)
+                                except Exception as e:
+                                    print (f'[WARNING] Failed to fetch {entry.filename};  {e}')
                                     continue
         else:
             # Should be image file. Read it.
@@ -145,10 +146,8 @@ class ClipModel:
         list_of_info = [] # List contains information dict. about each image.
         for file in files_list:
             '''Fetching images'''
-            for img_info in self.data_gen(file):
-                img = img_info[1]
-                img_path = img_info[0]
-                print (f'[INFO] Calculating CLIP vector for {img_path}...')
+            for img_path, img in self.data_gen(file):
+                print(f'[INFO] Calculating CLIP vector for {img_path}...')
                 # Compute clip vector
                 clip_vector = self.get_clip_vector(img, file)
                 # Insert image to cache
@@ -158,17 +157,10 @@ class ClipModel:
                     "image-hash": self.compute_hash(img, file), 
                     "clip-model": self.clip_model,
                     "pretrained": self.pretrained,
-                    "clip-vector" : clip_vector
+                    "clip-vector" : clip_vector.tolist()
                 })
 
         # Dump json into a clip-scores.json in output directory.
         with open("clip-scores.json", "w") as outfile:
             json.dump(list_of_info, outfile, indent=4)
         outfile.close()
-
-
-
-
-
-
-
