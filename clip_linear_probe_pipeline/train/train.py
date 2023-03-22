@@ -1,5 +1,6 @@
 import sys
-sys.path.insert(0, './')
+sys.path.append('./')
+sys.path.append('./clip_linear_probe_pipeline/model_api/')
 import argparse
 import warnings
 import numpy as np
@@ -8,7 +9,7 @@ from sklearn.svm import SVC
 from sklearn.linear_model import LogisticRegression
 from logistic_regression_pytorch_model.logistic_regression_pytorch import LogisticRegressionPytorch
 from train_helper_functions import *
-from model_api.model_api import ModelApi
+from model_api import ModelApi
 
 
 warnings.filterwarnings('ignore')

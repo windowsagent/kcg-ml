@@ -98,7 +98,7 @@ Also you may call `--help` to see the options and their defaults in the cli.
 ## Tool Description
 
 Given a `metadata_json` json file containing embeddings for images and `directory` of images' folder, the script start to loop over every image and make the classification for it using every binary classification model. If the `--output` argument is not specified, the classification / inference result will be placed at `./output/tagging_output` folder. Time stamp will be appended to folder name (for example: `./output/tagging_output_2023_1_21_0_56`).
-In addition, the SQLite database named `score_cache.sqlite` with table named `score_cache` containing file name, file path, file hash, model name, model type, model train date, tag string and tag score for given images will be created in the `./output` folder. 
+In addition, the SQLite database named `score_cache.sqlite` with table named `score_cache` (or `zip_score_cache.sqlite` with table named `zip_score_cache` for ZIP files) containing file name, file path, file hash, model name, model type, model train date, tag string and tag score for given images will be created in the `./output` folder. 
 
 
 ## Example Usage
@@ -141,6 +141,8 @@ The file cache module defined in `./clip_cache/cache_file.py` contains the class
 ## Usage Example
 
 ```python
+
+# Note: Run from project root directory
 
 from clip_cache.cache_file import FileCache
 
@@ -194,6 +196,8 @@ The CLIP cache module defined in `./clip_cache/cache_clip.py` contains the class
 
 ```python
 
+# Note: Run from project root directory
+
 from clip_cache.cache_clip import ClipCache
 
 # Create CLIP cache object
@@ -244,7 +248,9 @@ The return value is a dictionary with the same structure as a return value of `g
 
 ```python
 
-from cache_tag import TagCache
+# Note: Run from project root directory
+
+from clip_cache.cache_tag import TagCache
 
 # Create tag cache object
 tagCache = TagCache()
@@ -305,7 +311,7 @@ http://127.0.0.1:8080/get_random_img?db_path=./output/file_cache.sqlite
 > An API to list, access and use existing classifier models. Model API contains function that accesses existing classifier model pickle files (in given path) and returns existing classifier model as Python dictionary.
 
 ## Module Description
-The model API defined in `./model_api/model_api.py` contains the class definition with the following functions:
+The model API defined in `./clip_linear_probe_pipeline/model_api/model_api.py` contains the class definition with the following functions:
 
 * _class_  `model_api`.__`ModelApi`__ - A class to construct the model loader object.
 * __`get_models_dict`__(_`models_path`_) - Method that returns models dictionary for model pickle file in given `models_path`.
@@ -313,7 +319,10 @@ The model API defined in `./model_api/model_api.py` contains the class definitio
 ## Usage Example
 ```python
 
-from model_api.model_api import ModelApi
+# Note: Run from project root directory
+import sys
+sys.path.insert(0, './clip_linear_probe_pipeline/model_api/')
+from model_api import ModelApi
 
 # Create model loader object
 model_api = ModelApi()
@@ -356,11 +365,11 @@ http://127.0.0.1:8080/get_models
 
 # Model Cache
 > A tool for:
-> * Get list of image files for specific model and score range from classification result / score cache created in classification Stage 3 and Stage 4 (`score_cache.sqlite` or `zip_score_cache.sqlite`)
+> * Get list of image files for specific model and score range from classification result / score cache created in classification Stage 3 (`score_cache.sqlite` or `zip_score_cache.sqlite`)
 > * Clearing classification result / score cache created in classification Stage 3 and Stage 4 (`score_cache.sqlite` or `zip_score_cache.sqlite`) from entry with model training date older than the training date of respective current models in specified models directory.
 
 ## Module Description
-The model cache defined in `model_cache.py` contains the class definition with the following functions:
+The model cache defined in `./clip_cache/model_cache.py` contains the class definition with the following functions:
 
 * _class_  `model_cache`.__`ModelCache`__ - A class to construct the model cache object.
 * __`get_img_from_score_cache`__(_`models_name`_, _`score_gte = 0.0`_, _`score_lte = 1.0`_, _`db_path = './output/score_cache.sqlite'`_, _`db_table_name = 'score_cache'`_) - Returns list of file names for specific `model_name` and score between `score_gte` and `score_lte` from classification cache in `db_path` with table name `db_table_name`.
@@ -372,13 +381,15 @@ Get list of image files for specific model and score range
 
 ```python
 
-from model_cache import ModelCache
+# Note: Run from project root directory
+
+from clip_cache.model_cache import ModelCache
 
 # Create model cache object
 model_cache = ModelCache()
 
 # Get files dictionary 
-files_dict = model_cache.get_img_from_score_cache(model_name='model-ovr-logistic-regression-tag-pos-character', score_gte=0.9, score_lte=1.0)
+files_dict = model_cache.get_img_from_score_cache(model_name='ovr-logistic-regression-tag-not-pixel-art', score_gte=0.9, score_lte=1.0, db_path='./output/score_cache.sqlite', db_table_name='score_cache')
 
 ```
 
@@ -387,13 +398,15 @@ Clearing score cache based on model's training date. The following example will 
 
 ```python
 
-from model_cache import ModelCache
+# Note: Run from project root directory
+
+from clip_cache.model_cache import ModelCache
 
 # Create model cache object
 model_cache = ModelCache()
 
 # Clearing score cache for entries with outdated model 
-is_success, deleted_entries = model_cache.clear_score_cache_by_model_date()
+is_success, deleted_entries = model_cache.clear_score_cache_by_model_date(score_cache_path='./output/score_cache.sqlite', score_cache_table_name='score_cache')
 # is_success will be True when success or False if there is an error
 # deleted_entries will contain list of deleted entry dictionary.
 # The method will print the original number of entries, number of deleted entriee and current number of entries.
