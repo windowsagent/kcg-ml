@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, './')
+sys.path.append('./clip_linear_probe_pipeline/model_api/')
 from PIL import Image
 import os 
 import torch
@@ -17,7 +17,7 @@ import io
 import datetime
 #from model_pytorch_logistic_regression_classifier import LogisticRegressionPytorch
 from zipfile import ZipFile
-from model_api.model_api import ModelApi
+from model_api import ModelApi
 
 
 def save_json(

@@ -1,8 +1,10 @@
+import sys
+sys.path.append('./clip_linear_probe_pipeline/model_api/')
 import os 
 import sqlite3
 import json
 from datetime import datetime
-from model_api.model_api import ModelApi
+from model_api import ModelApi
 
 
 class ModelCache(object):
