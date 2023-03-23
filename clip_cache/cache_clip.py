@@ -17,7 +17,7 @@ class ClipCache(object):
 
     db_name = 'clip_cache.sqlite'
     out_dir = './output'
-    clip_model_type = 'ViT-B-32'
+    clip_model_type = 'ViT-L-14'
     clip_model_pretrained = 'openai'
 
 
@@ -188,7 +188,7 @@ class ClipCache(object):
                     print(f'[WARNING] Empty folder found. Ignoring it: {sub_dir}')
                     continue
 
-    def get_clip(self, clip_model_type : str = 'ViT-B-32', pretrained : str = 'openai'):
+    def get_clip(self, clip_model_type : str = 'ViT-L-14', pretrained : str = 'openai'):
         # get clip model from open_clip
         clip_model, _, preprocess = open_clip.create_model_and_transforms(clip_model_type,pretrained=pretrained)
         device = "cuda" if torch.cuda.is_available() else "cpu"

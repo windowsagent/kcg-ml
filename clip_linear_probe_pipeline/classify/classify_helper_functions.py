@@ -513,7 +513,7 @@ def classify_single_model_to_bin(
       # Get the tag
       tag = model['tag']
       # Model name
-      model_name = f'{model_type}-tag-{tag}'
+      model_name = f'model-{model_type}-tag-{tag}'
 
       # Score
       image_class_prob = classify_image_prob(image_features, classifier, torch_model=torch_model)
@@ -570,7 +570,7 @@ def classify_single_model_to_bin_zip(
       # Get the tag
       tag = model['tag']
       # Model name
-      model_name = f'{model_type}-tag-{tag}'
+      model_name = f'model-{model_type}-tag-{tag}'
 
       # Score
       image_class_prob     = classify_image_prob(image_features, classifier, torch_model=torch_model) # get the probability list
