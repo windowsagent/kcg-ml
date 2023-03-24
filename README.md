@@ -298,17 +298,17 @@ tagCache.clear_cache('./output/tag_cache.sqlite', delete_cache=False)
 > A web API for getting random image file from dataset and show its relevant data as follows: file name, file path, image size, container archive, hash ID, request time and the image itself.
 
 ## Module Description
-The web API module defined in `./datasets/dataset_http_api/dataset_http_api.py` runs FLASK-based server and contains functions to fetch random file from file cache database and returns its respective data (file name, file path, image size, container archive, hash ID, request time and the image itself) based on HTTP request made from web browser.
+The web API module defined in `./file_cache/http_api/http_api.py` runs FLASK-based server and contains functions to fetch random file from file cache database and returns its respective data (file name, file path, image size, container archive, hash ID, request time and the image itself) based on HTTP request made from web browser.
 
 ## Usage Example
 
 Start the web API module form CLI. In default, the server runs on host `0.0.0.0` and port `8080`.
 ```
-python ./datasets/dataset_http_api/dataset_http_api.py
+python ./file_cache/http_api/http_api.py
 ```
 or start the web API in other host and port using `host` and `port` CLI arguments as the follows.
 ```
-python ./datasets/dataset_http_api/dataset_http_api.py --host=0.0.0.0 --port=8000
+python ./file_cache/http_api/http_api.py --host=0.0.0.0 --port=8000
 ```
 
 Fetch random image from file cache database (created using File Cache Module in `file_cache.py`) specified in `db_path`. The following URL request (made from web browser) will return HTML page containing file name, file path, image size, container archive, hash ID, request time and the image itself. Specify the `db_path` as argument with query string using '?' and its value after `=`.
