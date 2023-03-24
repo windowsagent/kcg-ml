@@ -1,9 +1,15 @@
 
 
-### Pipeline Colab Notebook
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/example_image_tagging_tools.ipynb)
+### Notebooks
+| Notebook Title | Google Colab Link |
+| --- | --- |
+| Image Tagging Pipline | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/example_image_tagging_tools.ipynb)|
+| Clip Example | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/example_clip.ipynb)|
+| Clip Cache Example | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/example_clip_cache.ipynb) |
+| Clip Image Similarity | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/example_image_clip_similarity.ipynb) |
+| Ranking App | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/example_ranking_app.ipynb) |
 
-You can run the pipeline on google colab using the following [link](https://colab.research.google.com/github/kk-digital/kcg-ml/blob/main/notebooks/example_image_tagging_tools.ipynb)
+
 
 ## Installing Dependencies
 All what's needed to start using the pipeline locally is to have python 3.9+ then run the following command
@@ -25,6 +31,10 @@ pip install nbstripout nbconvert
 Next, we'll set up nbstripout to automatically clean the notebooks every time we commit them. Run the following command inside repo directory to install the nbstripout Git filter:
 ```sh
 nbstripout --install
+```
+Alternative installation to git attributes
+```sh
+nbstripout --install --attributes .gitattributes
 ```
 ### Using nbconvert
 Finally, you can use nbconvert to clean the output cells from the notebooks manually. Run the following command to clean all .ipynb files in the current directory:
