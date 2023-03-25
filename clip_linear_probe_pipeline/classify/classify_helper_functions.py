@@ -207,7 +207,7 @@ def unzip_folder(folder_path :str):
     #return os.path.join(dir_path, file_name)
 
 def get_clip(clip_model_type : str = 'ViT-L-14' ,
-             pretrained : str = 'openai'):
+             pretrained : str = 'laion2b_s32b_b82k'):
       """initiates the clip model, initiates the device type, initiates the preprocess
       :param clip_model_type: type of the CLIP model. 
       :type clip_model_type: str
