@@ -88,7 +88,7 @@ def classify(
         print("[WARNING] No json file loaded, calculating embeddings for every image.")
 
     # Get CLIP model, to calculate CLIP embeddings if it's not in .json metadata file.
-    clip_model , preprocess , device = get_clip(clip_model_type= 'ViT-L-14',pretrained= 'openai')
+    clip_model , preprocess , device = get_clip(clip_model_type= 'ViT-L-14',pretrained= 'laion2b_s32b_b82k')
 
     # Getting model
     classifier_model = get_classifier_model(model_type, tag)
@@ -268,7 +268,7 @@ def classify_zip(
         print("[WARNING] No .json file loaded, calculating embeddings for every image.")
 
     # Get CLIP model, to calculate CLIP embeddings if it's not in .json metadata file.
-    clip_model , preprocess , device = get_clip(clip_model_type= 'ViT-L-14',pretrained= 'openai')
+    clip_model , preprocess , device = get_clip(clip_model_type= 'ViT-L-14',pretrained= 'laion2b_s32b_b82k')
 
     # Getting model
     classifier_model = get_classifier_model(model_type, tag)

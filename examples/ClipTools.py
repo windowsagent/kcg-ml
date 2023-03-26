@@ -15,7 +15,7 @@ import time
 
 class ClipModel:
     ''' ClipModel class to get all clip model , preprocess and device '''
-    def __init__(self, clip_model: str = 'ViT-B-32', pretrained:str = 'openai'):
+    def __init__(self, clip_model: str = 'ViT-L-14', pretrained:str = 'laion2b_s32b_b82k'):
         
         self.clip_model = clip_model
         self.pretrained = pretrained
