@@ -22,3 +22,23 @@ pip install open_clip_torch
 pip install ascii_graph
 ```
 
+## Cleaning Jupyter Notebooks for Version Control
+### Installation
+First, make sure you have nbstripout and nbconvert installed . You can install them using pip:
+```sh
+pip install nbstripout nbconvert
+```
+### Setting up nbstripout
+
+```sh
+nbstripout --install
+```
+Alternative installation to git attributes
+```sh
+nbstripout --install --attributes .gitattributes
+```
+### Using nbconvert
+```sh
+python -m nbconvert --ClearOutputPreprocessor.enabled=True --to notebook *.ipynb --inplace
+```
+
