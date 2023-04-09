@@ -475,7 +475,7 @@ def classify_to_float(
   
   clip_model, preprocess , device = get_clip()
   
-  model_path = generate_model_path('./image-tagging-tools/output/models',model_type= model_name ,tag_name= tag_name)
+  model_path = generate_model_path('./kcg-ml/output/models',model_type= model_name ,tag_name= tag_name)
   model_dict = create_models_dict(models_path=model_path)
 
   image_features = clip_image_features(image_path,clip_model,preprocess,device) # Calculate image features.
