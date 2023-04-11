@@ -1,5 +1,5 @@
 import sys
-sys.path.append('./clip_linear_probe_pipeline/model_api/')
+sys.path.append('./image_classifier_pipeline/model_api/')
 from PIL import Image
 import os 
 import torch
