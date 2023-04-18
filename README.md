@@ -5,26 +5,14 @@ All what's needed to start using the pipeline locally is to have python 3.9+ the
 ```sh
 pip install -r ./requirements.txt
 ```
-## Cleaning Jupyter Notebooks (From Output) for Version Control
-
-To clean Jupyter notebooks for version control, we can use the nbstripout and nbconvert tools.
+## Cleaning Jupyter Notebooks for Version Control
 ### Installation
-First, make sure you have nbstripout and nbconvert installed . You can install them using pip:
 ```sh
-pip install nbstripout nbconvert
+pip install nbstripout
 ```
-### Setting up nbstripout
-
+#### Add a git filter to your repository's .git/confige file. nbsstipout will automatically strip the output and metadata from any notebook files
 ```sh
 nbstripout --install
-```
-Alternative installation to git attributes
-```sh
-nbstripout --install --attributes .gitattributes
-```
-### Using nbconvert
-```sh
-python -m nbconvert --ClearOutputPreprocessor.enabled=True --to notebook *.ipynb --inplace
 ```
 
 # Stage 1: Image Dataset Processor
