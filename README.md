@@ -304,7 +304,7 @@ The model API defined in `./image_classifier_pipeline/model_api/model_api.py` co
 
 # Note: Run from project root directory
 import sys
-sys.path.insert(0, './image_classifier_probe_pipeline/model_api/')
+sys.path.insert(0, './image_classifier_pipeline/model_api/')
 from model_api import ModelApi
 
 # Create model loader object
