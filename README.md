@@ -28,13 +28,13 @@ Process a directory of images (paths to directory of images or an archived datas
 * Process a tagged dataset (in this example is in `./dataset` folder) and save the output into `./output` folder. In addition, the SQLite database named `dataset_cache.sqlite` with table named `dataset_cache` containing file name, hash and file path for dataset images will be created in the `./output` folder. 
 
 ```sh
-python ./clip_linear_probe_pipeline/data_loader/ImageDatasetProcessor.py --input_folder=./dataset 
+python ./image_classifier_pipeline/data_loader/ImageDatasetProcessor.py --input_folder=./dataset 
 ```
 
 * Process a non-tagged dataset (in this example is in `./dataset` folder) and save the output into `./output/clip-cache` folder.  In addition, the SQLite database named `dataset_cache.sqlite` with table named `dataset_cache` containing file name, hash and file path for dataset images will be created in the `./output/clip-cache` folder.
 
 ```sh
-python ./clip_linear_probe_pipeline/data_loader/ImageDatasetProcessor.py --input_folder=./dataset --tagged_dataset=False
+python ./image_classifier_pipeline/data_loader/ImageDatasetProcessor.py --input_folder=./dataset --tagged_dataset=False
 ```
 
 ## CLI Arguments
@@ -87,12 +87,12 @@ In addition, the SQLite database named `score_cache.sqlite` with table named `sc
 ## Example Usage
 
 ```
-python ./clip_linear_probe_pipeline/classify/classify.py --directory=./path/to/images/dir --metadata_json=./output/input-metadata.json --model_type=ovr-logistic-regression --tag=pos-character
+python ./image_classifier_pipeline/classify/classify.py --directory=./path/to/images/dir --metadata_json=./output/input-metadata.json --model_type=ovr-logistic-regression --tag=pos-character
 ```
 Or
 
 ```
-python ./clip_linear_probe_pipeline/classify/classify.py --directory=./path/to/images/dir --metadata_json=./output/input-metadata.json --output=./output --output_bins=10 --model_type=ovr-logistic-regression --tag=pos-character
+python ./image_classifier_pipeline/classify/classify.py --directory=./path/to/images/dir --metadata_json=./output/input-metadata.json --output=./output --output_bins=10 --model_type=ovr-logistic-regression --tag=pos-character
 ```
 
 > Note that if the `output` folder is not present, the script automatically creates it for you. 
@@ -294,7 +294,7 @@ http://127.0.0.1:8080/get_random_img?db_path=./output/file_cache.sqlite
 > An API to list, access and use existing classifier models. Model API contains function that accesses existing classifier model pickle files (in given path) and returns existing classifier model as Python dictionary.
 
 ## Module Description
-The model API defined in `./clip_linear_probe_pipeline/model_api/model_api.py` contains the class definition with the following functions:
+The model API defined in `./image_classifier_pipeline/model_api/model_api.py` contains the class definition with the following functions:
 
 * _class_  `model_api`.__`ModelApi`__ - A class to construct the model loader object.
 * __`get_models_dict`__() - Method that returns models dictionary for model pickle files.
@@ -304,7 +304,7 @@ The model API defined in `./clip_linear_probe_pipeline/model_api/model_api.py` c
 
 # Note: Run from project root directory
 import sys
-sys.path.insert(0, './clip_linear_probe_pipeline/model_api/')
+sys.path.insert(0, './image_classifier_probe_pipeline/model_api/')
 from model_api import ModelApi
 
 # Create model loader object
@@ -328,16 +328,16 @@ Example stucture of models_dict
 > Web API to list existing classifier models (name, type, training start time and tag string) in JSON format. 
 
 ## Module Description
-The model web API defined in `./clip_linear_probe_pipeline/model_api/http_api.py` runs FLASK-based server and contains functions to list existing classifier models (name, type, training start time and tag string) in JSON format based on HTTP request made from web browser.
+The model web API defined in `./image_classifier_pipeline/model_api/http_api.py` runs FLASK-based server and contains functions to list existing classifier models (name, type, training start time and tag string) in JSON format based on HTTP request made from web browser.
 
 ## Usage Example
 Start the model web API form CLI. In default, the server runs on host `0.0.0.0` and port `8080`.
 ```
-python ./clip_linear_probe_pipeline/model_api/http_api.py
+python ./image_classifier_pipeline/model_api/http_api.py
 ```
 or start the web API in other host and port using `host` and `port` CLI arguments as the follows.
 ```
-python ./clip_linear_probe_pipeline/model_api/http_api.py --host=0.0.0.0 --port=8000
+python ./image_classifier_pipeline/model_api/http_api.py --host=0.0.0.0 --port=8000
 ```
 
 List existing classifier models (name, type, training start time and tag string)
