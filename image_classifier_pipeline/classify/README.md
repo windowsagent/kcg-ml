@@ -10,18 +10,18 @@ In addition, the SQLite database named `score_cache.sqlite` with table named `sc
 ## Installation
 All that's needed to start using classify.py is to install the dependencies using the command
 ```
-pip install -r ./clip_linear_probe_pipeline/classify/requirements.txt
+pip install -r ./image_classifier_pipeline/classify/requirements.txt
 ```
 
 ## Example Usage
 
 ```
-python ./clip_linear_probe_pipeline/classify/classify.py --metadata_json=./output/input-metadata.json --directory=/path/to/images/dir
+python ./image_classifier_pipeline/classify/classify.py --metadata_json=./output/input-metadata.json --directory=/path/to/images/dir
 ```
 Or
 
 ```
-python ./clip_linear_probe_pipeline/classify/classify.py --metadata_json=./output/input-metadata.json --directory=./path/to/images/dir --output=./output --output_bins=10 --model=./output/models
+python ./image_classifier_pipeline/classify/classify.py --metadata_json=./output/input-metadata.json --directory=./path/to/images/dir --output=./output --output_bins=10 --model=./output/models
 
 ```
 
@@ -47,12 +47,12 @@ Given `image_path` image file path and `model_path` model file path the script c
 ## Installation
 All that's needed to start using classify_single.py is to install the dependencies using the command
 ```
-pip install -r ./clip_linear_probe_pipeline/classify/requirements.txt
+pip install -r ./image_classifier_pipeline/classify/requirements.txt
 ```
 
 ## Example Usage
 ```
-python ./clip_linear_probe_pipeline/classify/classify_single.py --image_path=/path/to/img --model_path=path/to/model_file.pkl 
+python ./image_classifier_pipeline/classify/classify_single.py --image_path=/path/to/img --model_path=path/to/model_file.pkl 
 ```
 
 ## CLI Arguments
