@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, '/content/kcg-ml/clip_linear_probe_pipeline/')
+sys.path.insert(0, '/content/kcg-ml/image_classifier_pipeline/')
 sys.path.insert(0, '/content/kcg-ml/')
 from classify.classify_helper_functions import * 
 import open_clip
