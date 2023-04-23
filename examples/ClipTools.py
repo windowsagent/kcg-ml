@@ -68,8 +68,8 @@ class ClipModel:
                 # Image files other than gif
                 img_obj = img
 
-            image = self.preprocess(img_obj).unsqueeze(0).to(self.device)
-            return self.model.encode_image(image).detach().numpy()
+            image = self.preprocess(img_obj).cpu().unsqueeze(0).to(self.device)
+            return self.model.encode_image(image).cpu().detach().numpy()
 
     def data_gen(self, data_file):
         '''Image generator for data_file'''
