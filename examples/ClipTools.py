@@ -128,7 +128,7 @@ class ClipModel:
             print(f"[ERROR] {e}:  cannot compute hash for {img_file_name}")
             return None 
 
-    def encode_data_directory(self, data_dir: str):
+    def encode_data_directory(self, data_dir: str, output_dir='./', output_file_name='clip-scores.json'):
         """encoding images in a specific zip file or in a directory
         or a dictory of zip files.
         """
@@ -168,6 +168,6 @@ class ClipModel:
                 img_counter += 1
             print(f"[INFO] ZIP {i+1} OF {len(files_list)}, TIME : {time.time() - start_time:.2f} SECS, {img_counter} IMAGES")
         # Dump json into a clip-scores.json in output directory.
-        with open("clip-scores.json", "w") as outfile:
+        with open(os.path.join(output_dir, output_file_name), "w") as outfile:
             json.dump(list_of_info, outfile, indent=4)
         outfile.close()
