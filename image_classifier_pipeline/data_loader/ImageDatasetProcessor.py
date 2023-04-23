@@ -284,7 +284,7 @@ class ImageDatasetProcessor:
         Creating database and table for writing json_result data from dataset
         '''
         
-        DATABASE_NAME = 'dataset_cache.sqlite'
+        DATABASE_NAME = 'image_dataset_cache.sqlite'
         DATABASE_PATH = f'{output_folder}/{DATABASE_NAME}'
         
         def __delete_all_data_in_database():
