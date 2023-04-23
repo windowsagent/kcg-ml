@@ -20,6 +20,7 @@ class ClipModel:
         self.clip_model = clip_model
         self.pretrained = pretrained
         self.model , self.preprocess , self.device = get_clip(self.clip_model, self.pretrained)
+        self.model.to(self.device)
 
     def download_model(self, model_name: str, pretrained: str):
         """ dowload specifc clip model to the machine. """
