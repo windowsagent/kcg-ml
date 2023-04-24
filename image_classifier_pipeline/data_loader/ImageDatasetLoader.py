@@ -155,9 +155,8 @@ class ImageDatasetLoader:
         return files_to_skip
 
     @staticmethod
-    def load(dataset_path: str, tagged_dataset: bool = True,  recursive: bool = True, batch_size: int = 32): 
+    def load(dataset_path: str, tagged_dataset: bool = True, recursive: bool = True, batch_size: int = 32):
         """loader for the given dataset path, it returns a generator 
-        
         :param dataset_path: path of the dataset either it's an archive or a directory of images.
         :type dataset_path: str
         :param tagged_dataset: if the given dataset is a tagged dataset, default is `True`
@@ -168,7 +167,7 @@ class ImageDatasetLoader:
         :returns: an iterator of images in the folder. 
         :rtype: Iterator[list[PIL.Image.Image]]
         """
-        
+
         archive_dataset = False 
         image_dataset_folder_path = dataset_path 
         # if the given path is a path of an archive. 
@@ -177,9 +176,9 @@ class ImageDatasetLoader:
             image_dataset_folder_path = ImageDatasetLoader.__extract_archive(dataset_path)
             print("is archive dataset")
             print(f"dataset folder path  = {image_dataset_folder_path}")
-        
+
         dataset_files_paths = ImageDatasetLoader.__list_dir(image_dataset_folder_path, recursive)
-        
+
         if tagged_dataset: 
             # Check for empty directories and files outside of tag folder, skip it for processing
             files_to_skip = ImageDatasetLoader.get_skipped_files(image_dataset_folder_path, only_sub_dir=True)
@@ -195,12 +194,16 @@ class ImageDatasetLoader:
             last_chunk = (chunk_pos + batch_size >= len(dataset_files_paths))
             
             images = [] 
-            
+
             for file_path in files_chunk: 
-                try: #try to open file path as image
+                if not os.path.exists(file_path):
+                    file_path_png = os.path.splitext(file_path)[0] + '.png'
+                    if os.path.exists(file_path_png):
+                        file_path = file_path_png
+
+                try:
                     images.append(Image.open(file_path))
-                except Exception as error: #file is not a valid image.
-                    print(f"[WARNING]: image {file_path} was be skipped due to the error {error}")
+                except Exception as error:
                     continue
 
             #it's the last element, as it's generator to avoid error when deleting the folder and the file is accessed by another process.
@@ -213,3 +216,4 @@ class ImageDatasetLoader:
             # Dont clear the files, do nothing
             pass
             #shutil.rmtree(image_dataset_folder_path)
+
