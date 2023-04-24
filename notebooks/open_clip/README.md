@@ -1,1 +1,0 @@
-# open-clip repo notebooks
