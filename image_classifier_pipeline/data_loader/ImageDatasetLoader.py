@@ -150,7 +150,8 @@ class ImageDatasetLoader:
                 ImageDatasetLoader.get_skipped_files(sub_dir)
             else:
                 '''RV: Deletion codes are removed since it should not delete anything. Prompt error instead'''
-                raise Exception ('[ERROR]: Dataset format is possibly invalid...]')
+                #raise Exception ('[ERROR]: Dataset format is possibly invalid...]')
+                print('[WARNING]: Dataset format is possibly invalid...]')
 
         return files_to_skip
 
@@ -216,4 +217,3 @@ class ImageDatasetLoader:
             # Dont clear the files, do nothing
             pass
             #shutil.rmtree(image_dataset_folder_path)
-
