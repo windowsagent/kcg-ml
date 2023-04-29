@@ -7,9 +7,9 @@ import numpy as np
 from datetime import datetime
 from sklearn.svm import SVC
 from sklearn.linear_model import LogisticRegression
-from image_classifier_pipeline.model_api.logistic_regression_pytorch import LogisticRegressionPytorch
+from logistic_regression_pytorch import LogisticRegressionPytorch
 from train_helper_functions import *
-from image_classifier_pipeline.model_api.model_api import ModelApi
+from model_api import ModelApi
 
 
 warnings.filterwarnings('ignore')
