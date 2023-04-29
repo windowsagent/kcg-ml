@@ -1,0 +1,14 @@
+[api]
+id =
+hash =
+token =
+
+[chat]
+id =
+id_data =
+
+[proxy]
+use = false
+url =
+login =
+password =
