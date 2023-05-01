@@ -17,11 +17,12 @@ from configparser import ConfigParser
 # Read the values from the config file
 config = ConfigParser()
 config.read('config.ini')
-api_id = config['api']['id']
-api_hash = config['api']['hash']
-token = config['api']['token']
-chat_id = config['chat']['id']
-data_chat_id = config['chat']['id_data']
+api_id = config['api']['user_id']
+api_hash = config['api']['user_hash']
+token = config['api']['bot_token']
+chat_id = config['chat']['main_chat_id']
+data_chat_id = config['chat']['data_chat_id']
+image_path = config['dir']['images_path']
 
 class FSMGetId(StatesGroup):
     hash_first_image = State()
@@ -61,7 +62,7 @@ async def command_take_photos(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         used_images = data.get("used_images", [])
 
-        images = [img for img in os.listdir("images") if img not in used_images]
+        images = [img for img in os.listdir(image_path) if img not in used_images]
 
         if not images:
             await bot.send_message(message.chat.id, "All images have been used.")

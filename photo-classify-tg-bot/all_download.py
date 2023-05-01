@@ -9,9 +9,9 @@ session_files = [f for f in os.listdir('.') if f.endswith('.session')]
 # Read the chat_id from the config file
 config = ConfigParser()
 config.read('config.ini')
-chat_id = config['chat']['id_data']
-api_id = config['api']['id']
-api_hash = config['api']['hash']
+chat_id = config['chat']['data_chat_id']
+api_id = config['api']['user_id']
+api_hash = config['api']['user_hash']
 
 async def all_download():
     id = chat_id

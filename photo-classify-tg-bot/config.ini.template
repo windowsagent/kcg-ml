@@ -1,14 +1,17 @@
 [api]
-id =
-hash =
-token =
+user_id =
+user_hash =
+bot_token =
 
 [chat]
-id =
-id_data =
+main_chat_id =
+data_chat_id =
 
 [proxy]
 use = false
 url =
 login =
 password =
+
+[dir]
+images_path=./images/
