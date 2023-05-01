@@ -8,10 +8,10 @@ storage = MemoryStorage()
 # Read the values from the config file
 config = ConfigParser()
 config.read('config.ini')
-api_id = config['api']['id']
-api_hash = config['api']['hash']
-token = config['api']['token']
-chat_id = config['chat']['id']
+api_id = config['api']['user_id']
+api_hash = config['api']['user_hash']
+token = config['api']['bot_token']
+chat_id = config['chat']['main_chat_id']
 use_proxy = config['proxy'].getboolean('use')
 proxy_url = config['proxy']['url']
 proxy_login = config['proxy']['login']

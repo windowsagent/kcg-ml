@@ -4,8 +4,8 @@ from configparser import ConfigParser
 # Read the values from the config file
 config = ConfigParser()
 config.read('config.ini')
-api_id = config['api']['id']
-api_hash = config['api']['hash']
+api_id = config['api']['user_id']
+api_hash = config['api']['user_hash']
 
 # Create a Pyrogram client
 client = Client('sesion', api_id, api_hash)
