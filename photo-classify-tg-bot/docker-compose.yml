@@ -4,3 +4,14 @@ services:
     image: kcg-photo-telegram
     volumes:
       - ./:/repo/
+  shadowsocks-client:
+    restart: always
+    image: shadowsocks-client
+    ports:
+      - "127.0.0.1:1080:1080"
+    environment:
+      - SERVER_ADDR=server
+      - SERVER_PORT=443
+      - METHOD=aes-256-gcm
+      - PASSWORD=yourpassword
+      - OBFS_ARG=obfs=http;obfs-host=www.bing.com
