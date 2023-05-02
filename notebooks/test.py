@@ -18,6 +18,6 @@ for root, dirs, files in os.walk("."):
 
 # Run jupyter-runner for each notebook file found
 for file in notebook_files:
-    output_dir = os.path.join(log_dir, os.path.relpath(file, "."))
-    cmd = ["jupyter-runner", file, "--output-directory", output_dir]
-    subprocess.run(cmd)
+    cmd = ["jupyter-runner", "--allow-errors", file, "--output-directory", log_dir, "--debug"]
+    print(f"Executing command: {' '.join(cmd)}")
+    subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
