@@ -57,22 +57,6 @@ Build the image
 DOCKER_BUILDKIT=1 docker build -t kcg-photo-telegram .
 ```
 
-Build the shadowsocks client image
-```bash
-cd shadowsocks-client
-sh build.sh
-```
-Then modify docker-compose.yml: (for the shadowsocks proxy)
-
-```bash
-    environment:
-      - SERVER_ADDR=server
-      - SERVER_PORT=443
-      - METHOD=aes-256-gcm
-      - PASSWORD=yourpassword
-```
-**If using a shadowsocks proxy, change the config.ini accordinly (to use 127.0.0.1:1080) as a proxy URL**
-
 Run the container (ensure you have docker compose installed)
 ```bash
 docker compose up -d
