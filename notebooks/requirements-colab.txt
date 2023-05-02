@@ -10,7 +10,7 @@ appdirs==1.4.4
 arviz==0.12.1
 ascii-graph==1.5.1
 astor==0.8.1
-astropy==4.3.1
+astropy
 astunparse==1.6.3
 async-timeout==4.0.2
 asynctest==0.13.0
