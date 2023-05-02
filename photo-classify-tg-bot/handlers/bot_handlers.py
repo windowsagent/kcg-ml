@@ -59,7 +59,7 @@ async def change_photo(path_to_first_image,path_to_second_image):
     new_image.save("merged_image.jpg")
     # await FSMGetId.next()
 
-async def command_take_photos(message: types.Message, state: FSMContext):
+async def command_rank(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         used_images = data.get("used_images", [])
 
@@ -144,6 +144,6 @@ def register_callback_query_handlers():
     dp.callback_query_handler(second_photo_callback,text="command_second")
     dp.callback_query_handler(hashes_callback,text="command_hashes")
 def register_bot_handlers():
-    dp.register_message_handler(command_take_photos,commands="take_photos")
+    dp.register_message_handler(command_rank,commands="rank")
     dp.register_message_handler(command_download_all_data,commands="download_all_data")
     dp.register_message_handler(command_help,commands="help")
