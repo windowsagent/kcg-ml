@@ -12,6 +12,7 @@ from datetime import datetime
 from aiogram.types import CallbackQuery
 import imagehash
 import asyncio
+import json
 from configparser import ConfigParser
 
 # Read the values from the config file
@@ -103,31 +104,29 @@ async def hashes_callback(callback: CallbackQuery, state: FSMContext):
     await bot.send_message(chat_id=chat_id, text=message_text)
     await state.finish()
 
-@dp.callback_query_handler(text='command_first',state=FSMGetId)
 async def first_photo_callback(callback: CallbackQuery,state: FSMContext):
     message = callback.message
-    current_date = datetime.now()
-    current_date = str(current_date.year) + "-" + str(current_date.month) + "-" + str(current_date.day) + " " + str(
-        current_date.hour) + ":" + str(current_date.minute)
+    current_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     async with state.proxy() as data:
-        message_json = {"message_id": message.message_id, "date": current_date,
+        message_json = {"message_id": message.message_id,
+                        "date": current_date,
                         "platform": "telegram",
                         "first_name": message.from_user.first_name,
                         "lastname": message.from_user.last_name,
                         "hash_first_image": str(data["hash_first_image"]),
                         "hash_second_image": str(data["hash_second_image"]),
                         "hash_selected_message": str(data["hash_first_image"])}
-    await bot.send_message(chat_id=data_chat_id, text=message_json)
-    #chat_id = Channel for data
+    file_name = f"downloads/{current_date}.json"
+    with open(file_name, "w") as f:
+        json.dump(message_json, f)
     await state.finish()
+
 @dp.callback_query_handler(text='command_second',state=FSMGetId)
 async def second_photo_callback(callback: CallbackQuery,state: FSMContext):
     message = callback.message
-    current_date = datetime.now()
-    current_date = str(current_date.year) + "-" + str(current_date.month) + "-" + str(current_date.day) + " " + str(
-        current_date.hour) + ":" + str(current_date.minute)
+    current_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     async with state.proxy() as data:
-        message_json = {"messasge_id": message.message_id,
+        message_json = {"message_id": message.message_id,
                         "date": current_date,
                         "platform": "telegram",
                         "first_name": message.from_user.first_name,
@@ -135,8 +134,9 @@ async def second_photo_callback(callback: CallbackQuery,state: FSMContext):
                         "hash_first_image": str(data["hash_first_image"]),
                         "hash_second_image": str(data["hash_second_image"]),
                         "hash_selected_message": str(data["hash_second_image"])}
-    await bot.send_message(chat_id=data_chat_id, text=message_json)
-    # chat_id = Channel for data
+    file_name = f"downloads/{current_date}.json"
+    with open(file_name, "w") as f:
+        json.dump(message_json, f)
     await state.finish()
 
 def register_callback_query_handlers():
