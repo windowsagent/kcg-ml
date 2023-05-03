@@ -3,9 +3,6 @@ import os
 from pyrogram import Client
 from configparser import ConfigParser
 
-# Check for the presence of ".session" files in the current directory
-session_files = [f for f in os.listdir('.') if f.endswith('.session')]
-
 # Read the chat_id from the config file
 config = ConfigParser()
 config.read('config.ini')
@@ -25,3 +22,16 @@ async def all_download():
           if mess != None:
             file.write(str(mess.text) + "\n")
     await client.stop()
+
+'''
+async def main():
+    # Check for the presence of ".session" files in the current directory
+    session_files = [f for f in os.listdir('.') if f.endswith('.session')]
+
+    await all_download()
+
+
+if __name__ == '__main__':
+    asyncio.run(main())
+
+'''

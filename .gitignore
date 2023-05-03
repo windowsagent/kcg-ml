@@ -140,3 +140,5 @@ clip_linear_probe_pipeline/classify_zip
 .DS_Store
 
 notebooks/logs/*
+
+*.session
