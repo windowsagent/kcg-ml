@@ -1,7 +1,7 @@
 import random
+import subprocess
 import os
 from PIL import Image,ImageOps
-from all_download import chat_id
 from all_download import all_download
 from create_bot import *
 from aiogram import types
@@ -90,17 +90,17 @@ async def command_download_all_data(message: types.Message):
     await all_download()
 
 async def command_help(message: types.Message):
-    help_text = "This bot will merge two images, send them, and do a poll for the user to choose one. To start, use the /take_photos command. \n\nAvailable commands: \n/take_photos - send photo in the photo channel with polls \ \n /download_all_data - Download all of the data from the JSON data channel \n /help - Consult the help"
+    help_text = "This bot will merge two images, send them, and do a poll for the user to choose one. To start, use the /rank command. \n\nAvailable commands: \n/rank - send photo in the photo channel with polls \ \n /download_all_data - Download all of the data from the JSON data channel \n /help - Consult the help"
     await bot.send_message(message.chat.id, help_text)
 
 @dp.callback_query_handler(text='command_details',state=FSMGetId)
-async def hashes_callback(callback: CallbackQuery, state: FSMContext):
+async def details_callback(callback: CallbackQuery, state: FSMContext):
     message = callback.message
     current_date = datetime.now()
     current_date = str(current_date.year) + "-" + str(current_date.month) + "-" + str(current_date.day) + " " + str(
         current_date.hour) + ":" + str(current_date.minute)
     async with state.proxy() as data:
-        message_text = f"Hash of first image: {data['hash_first_image']}\nHash of second image: {data['hash_second_image']} \n Directory: " + os.getcwd() + "Task type: "
+        message_text = f"Hash of first image: {data['hash_first_image']}\nHash of second image: {data['hash_second_image']}\n Image directory: " + image_path + "\nTask type: "
     await bot.send_message(chat_id=chat_id, text=message_text)
     await state.finish()
 
@@ -143,7 +143,7 @@ async def second_photo_callback(callback: CallbackQuery,state: FSMContext):
 def register_callback_query_handlers():
     dp.callback_query_handler(first_photo_callback,text="command_first")
     dp.callback_query_handler(second_photo_callback,text="command_second")
-    dp.callback_query_handler(hashes_callback,text="command_details")
+    dp.callback_query_handler(details_callback,text="command_details")
 def register_bot_handlers():
     dp.register_message_handler(command_rank,commands="rank")
     dp.register_message_handler(command_download_all_data,commands="download_all_data")

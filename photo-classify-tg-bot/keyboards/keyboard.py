@@ -1,5 +1,5 @@
 from aiogram.types import ReplyKeyboardMarkup,KeyboardButton,InlineKeyboardButton,InlineKeyboardMarkup
-bb1 = KeyboardButton("/take_photos")
+bb1 = KeyboardButton("/rank")
 bb2 = KeyboardButton("/download_all_data")
 kb_bot = ReplyKeyboardMarkup(resize_keyboard=True)
 kb_bot.add(bb1,bb2)
