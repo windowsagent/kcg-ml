@@ -17,6 +17,7 @@ import imagehash
 import asyncio
 import json
 from configparser import ConfigParser
+from handlers.hash_shortener import HashShortener
 
 # Read the values from the config file
 config = ConfigParser()
@@ -39,6 +40,29 @@ def generate_image_hash(image_path):
         sha256_hash = hashlib.sha256(img_bytes).digest()
         base64_hash = base64.b64encode(sha256_hash).decode('utf-8')
         return base64_hash
+
+def shorten_hash(hash_str, n_character=16):
+    """
+    Shorten a sha-256 hash string to n_character characters.
+
+    Args:
+    hash_str (str): sha-256 hash string to be shortened
+    n_character (int): number of characters in the shortened hash (default: 16)
+
+    Returns:
+    str: shortened hash string
+    """
+    # Compute the sha-256 hash of the input string
+    hash_obj = hashlib.sha256(hash_str.encode())
+    hash_digest = hash_obj.digest()
+
+    # Convert the hash digest to an integer and shorten it
+    hash_int = int.from_bytes(hash_digest, byteorder='big')
+    hash_shortener = HashShortener(n_character)
+    shortened_hash = hash_shortener.encode_id(hash_int)
+
+    return shortened_hash
+
 
 class FSMGetId(StatesGroup):
     hash_first_image = State()
@@ -132,7 +156,7 @@ async def process_name(message: types.Message, state: FSMContext):
     await bot.send_message(message.chat.id, f"Task set as '{task}'")
     await state.finish()
 
-@dp.callback_query_handler(text='command_details',state=FSMGetId)
+@dp.callback_query_handler(text='command_details', state=FSMGetId)
 async def details_callback(callback: CallbackQuery, state: FSMContext):
     message = callback.message
     current_date = datetime.now()
@@ -141,7 +165,9 @@ async def details_callback(callback: CallbackQuery, state: FSMContext):
     if 'task' not in globals():
         task = "rank"
     async with state.proxy() as data:
-        message_text = f"image_hash_0: {data['hash_first_image']}\nimage_hash_1: {data['hash_second_image']}\nimage_dir: " + image_path + "\ntask_type: " + task
+        hash_first_image = shorten_hash(data['hash_first_image'])
+        hash_second_image = shorten_hash(data['hash_second_image'])
+        message_text = f"image_hash_0: {hash_first_image}\nimage_hash_1: {hash_second_image}\nimage_dir: {image_path}\ntask_type: {task}"
         await bot.send_message(chat_id=chat_id, text=message_text)
 
 @dp.callback_query_handler(text='command_first',state=FSMGetId)
