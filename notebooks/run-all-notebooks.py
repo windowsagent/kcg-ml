@@ -6,7 +6,7 @@ import time
 current_time = time.strftime("%Y-%m-%d-%H-%M-%S")
 
 # Create log directory with current timestamp
-log_dir = os.path.join(".", "logs", current_time)
+log_dir = os.path.join(".", "log", current_time)
 os.makedirs(log_dir)
 
 # Find all .ipynb files recursively from current directory
