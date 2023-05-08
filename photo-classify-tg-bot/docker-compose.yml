@@ -1,6 +1,0 @@
-services:
-  kcg-photo-telegram:
-    restart: unless-stopped
-    image: kcg-photo-telegram
-    volumes:
-      - ./:/repo/
