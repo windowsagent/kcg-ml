@@ -58,6 +58,36 @@ class LogisticRegressionPytorch(torch.nn.Module):
             
             return model
     
+
+    def save_model(self, file_path: str):
+        """Save the model to the specified file path.
+
+        :param file_path: The path (including filename) to save the model.
+        :type file_path: str
+        """
+        torch.save(self.state_dict(), file_path)
+        
+    def load_model(file_path: str, input_dim: int, output_dim: int, date_trained=None, tag=None):
+        """Load the model from the specified file path.
+
+        :param file_path: The path (including filename) to load the model.
+        :type file_path: str
+        :param input_dim: The input dimension for the model.
+        :type input_dim: int
+        :param output_dim: The output dimension for the model.
+        :type output_dim: int
+        :param date_trained: The date the model was trained, defaults to None
+        :type date_trained: str, optional
+        :param tag: The tag of the model, defaults to None
+        :type tag: str, optional
+        :return: The loaded model
+        :rtype: LogisticRegressionPytorch
+        """
+        model = LogisticRegressionPytorch(input_dim, output_dim, date_trained, tag)
+        model.load_state_dict(torch.load(file_path))
+        return model
+
+    
     def calc_confusion_matrix(
                             test_labels , 
                             predictions ,

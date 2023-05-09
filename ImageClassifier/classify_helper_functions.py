@@ -12,6 +12,7 @@ import joblib
 import json
 import hashlib
 import datetime
+import math
 import numpy as np
 import io
 import datetime
@@ -50,32 +51,6 @@ def save_json(
 #     return model_file_name.split('-tag-')[0].split('model-')[1] , model_file_name.split('-tag-')[1] 
 
 
-def find_bin(
-             bins_arr,
-             prob
-             ):
-    """ find the bin value for tag class and other class
-    
-    :param bins_arr: Numpy array holding the bins values.
-    :type bins_arr:  NdArray
-    :param prob: value of the probability to be in a certain tag..
-    :type prob:  float.
-    :returns: a tuple of tag bin value and other bin value.
-    :rtype: Tuple[str]
-    """
-    return str(bins_arr[np.absolute(bins_arr-prob).argmin()]) , str(bins_arr[np.absolute(bins_arr-(1-prob)).argmin()])
-
-
-def get_bins_array(bins_number):
-    """generate array of bins using the number of bins choosen
-    
-    :param bins_number: number of bins to be generated.
-    :type bins_number: int
-    :returns: a Numpy array of the bins values.
-    :rtype: Numpy Array
-    """
-    num = 1.0 / bins_number
-    return np.array([round(i , 3) for i in np.arange(num , 1.0+num , num)])
 
 
 def classify_image_prob(
@@ -107,25 +82,6 @@ def classify_image_prob(
     return prob
 
 
-def load_json(json_file_path:str):
-    """ Takes a path for json file then returns a dictionary of it.
-
-        :param json_file_path: path to the json file.
-        :type json_file_path: str
-        :returns: dictionary of the json file.
-        :rtype: dict
-    """
-    if json_file_path != None:
-      try :
-        with open(json_file_path, 'rb') as json_obj:
-          json_dict = json.load(json_obj)
-        return json_dict
-      
-      except Exception as e : # handles any exception of the json file
-        print(f"[ERROR] Problem loading {json_file_path} the json file")
-        return None
-    else:
-      return None
 
 def create_out_folder(base_dir = './'):
     """creates output directory for the image classification task.
@@ -138,16 +94,14 @@ def create_out_folder(base_dir = './'):
     image_tagging_folder_name = (f'{base_dir}/tagging_output_{timestamp.year}_{timestamp.month}_{timestamp.day}_{timestamp.hour}_{timestamp.minute}_{timestamp.second}')
     return make_dir(image_tagging_folder_name)
 
-def compute_blake2b(image: Image.Image): 
-    """compute the BLAKE2b of a PIL image. 
 
-    :param image: The PIL image to compute its BLAKE2b
-    :type image: PIL.Image.Image
-    :returns: the BLAKE2b str of the given image. 
-    :rtype: str
-    """
-    
-    return hashlib.blake2b(image.tobytes()).hexdigest()
+
+def FloatToBin(x: float, bin_count: int) -> int:
+    bin_size = 1.0 / float(bin_count)
+    bin = math.floor(x / bin_size)
+
+    return bin
+
 
 
 def make_dir(dir_names : Union[List[str] , str]):
