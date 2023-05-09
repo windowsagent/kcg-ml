@@ -4,7 +4,7 @@ import sqlite3
 import time
 from classify_helper_functions import *
 
-def main(folder_path: str, 
+def run_image_classification(folder_path: str, 
         output_dir: str,
         json_file_path: str, 
         bins_number: int, 
@@ -441,7 +441,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # Run the main program 
-    main(
+    run_image_classification(
         folder_path    = args.directory, 
         output_dir     = args.output, 
         json_file_path = args.metadata_json, 

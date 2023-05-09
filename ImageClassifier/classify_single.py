@@ -1,7 +1,7 @@
 import argparse
 from classify_helper_functions import *
 
-def main(
+def image_classification(
         image_path: str, 
         bins_number : int, 
         model_path : str, 
@@ -56,7 +56,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # Run the main program 
-    main(
+    image_classification(
         image_path    = args.image_path, 
         model_path     = args.model_path,
         bins_number    = args.output_bins
