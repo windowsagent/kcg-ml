@@ -37,9 +37,8 @@ VERSION = "v1.0"
 def generate_image_hash(image_path):
     with Image.open(image_path) as img:
         img_bytes = img.tobytes()
-        sha256_hash = hashlib.sha256(img_bytes).digest()
-        base64_hash = base64.b64encode(sha256_hash).decode('utf-8')
-        return base64_hash
+        sha256_hash = hashlib.sha256(img_bytes).hexdigest()
+        return sha256_hash
 
 def shorten_hash(hash_str, n_character=16):
     """
