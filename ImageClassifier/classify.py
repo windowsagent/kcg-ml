@@ -1,13 +1,11 @@
 import argparse
 import os
-import sqlite3
 import time
 from classify_helper_functions import *
 
 def run_image_classification(folder_path: str, 
         output_dir: str,
         json_file_path: str, 
-        bins_number: int, 
         model_type: str, 
         tag: str
         ):
@@ -21,16 +19,15 @@ def run_image_classification(folder_path: str,
     print(f"[INFO] Output folder {image_tagging_folder}")
 
     # Classify unzipped data
-    classify(folder_path, output_dir, json_file_path, bins_number, model_type, tag, image_tagging_folder)
+    classify(folder_path, output_dir, json_file_path, model_type, tag, image_tagging_folder)
     # Classify ZIP archived data
-    classify_zip(folder_path, output_dir, json_file_path, bins_number, model_type, tag, image_tagging_folder)
+    classify_zip(folder_path, output_dir, json_file_path, model_type, tag, image_tagging_folder)
 
 
 def classify(
         folder_path: str, 
         output_dir: str,
         json_file_path: str, 
-        bins_number: int, 
         model_type: str, 
         tag: str,
         image_tagging_folder: str
@@ -43,8 +40,6 @@ def classify(
     :type output_dir: str
     :param json_file_path: .json file containing the hash , clip features and meta-data of the image.
     :type json_file_path: str
-    :param bins_numbers: number of bins to divide the output into.
-    :type bins_number: int
     :param model_path: path to the model's .pkl file or the directory of models' pickle files/
     :type model_path: str
     :rtype: None
@@ -98,8 +93,6 @@ def classify(
         print ('[INFO]: Model not found. No classification performed.')
         return
 
-    # Creating bin
-    bins_array  = get_bins_array(bins_number) 
 
     out_json = {} # a dictionary for classification scores for every model.
         
@@ -111,7 +104,6 @@ def classify(
                                         classifier_model,
                                         metadata_json_obj,
                                         image_tagging_subfolder,
-                                        bins_array,
                                         clip_model,
                                         preprocess,
                                         device
@@ -123,62 +115,10 @@ def classify(
 
     save_json(out_json,image_tagging_subfolder) # save the output.json file
 
-    '''
-    Database writing
-    Creating database and table for writing json_result data from dataset
-    '''
-    
-    db_out_dir = output_dir
+ 
+
     #make sure result output path exists 
-    os.makedirs(db_out_dir, exist_ok = True)
-    DATABASE_NAME = '/score_cache.sqlite'
-    DATABASE_PATH = f'{db_out_dir}/{DATABASE_NAME}'
 
-    def __delete_all_data_in_database():
-        __delete_database()
-        __create_database()
-
-    def __create_database():
-        cmd1 = '''CREATE TABLE score_cache (
-        file_name   TEXT    NOT NULL,
-        file_path   TEXT    NOT NULL,
-        type        TEXT,
-        hash_id     TEXT,
-        model_name  TEXT,
-        model_type  TEXT,
-        model_train_date  TEXT,    
-        tag    TEXT,
-        tag_score    REAL    
-        );
-        '''
-        db = sqlite3.connect(DATABASE_PATH)
-        c = db.cursor()
-        c.execute('PRAGMA encoding="UTF-8";')
-        c.execute(cmd1)
-        db.commit()
-    
-    def __delete_database():
-        try:
-            if(os.path.exists(DATABASE_PATH)):
-                os.remove(DATABASE_PATH)
-        except Exception as e:
-            print(str(e))
-            time.sleep(1)
-            __delete_database()
-
-    def __insert_data_into_database(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9):
-        try:
-            cmd = "insert into score_cache(file_name, file_path, type, hash_id, model_name, model_type, model_train_date, tag, tag_score) values ('"+arg1+"', '"+arg2+"', '"+arg3+"', '"+arg4+"', '"+arg5+"', '"+arg6+"', '"+arg7+"', '"+arg8+"', '"+arg9+"')"
-            with sqlite3.connect(DATABASE_PATH) as conn:
-                conn.execute(cmd)
-                conn.commit()
-        except Exception as e:
-            if(str(e).find('lock') != -1 or str(e).find('attempt to write a readonly database') != -1):
-                time.sleep(1)
-
-    print (f'[INFO] Writing to database table in {DATABASE_PATH}')
-    
-    __delete_all_data_in_database()
 
     # Extracting data from json_result from dataset
     json_keys = list(out_json.keys())
@@ -211,7 +151,6 @@ def classify_zip(
         folder_path: str, 
         output_dir: str,
         json_file_path: str, 
-        bins_number: int, 
         model_type: str, 
         tag: str,
         image_tagging_folder: str
@@ -230,8 +169,7 @@ def classify_zip(
     :type output_dir: str
     :param json_file_path: .json file containing the hash , clip features and meta-data of the image.
     :type json_file_path: str
-    :param bins_numbers: number of bins to divide the output into.
-    :type bins_number: int
+
     :param model_path: path to the model's .pkl file or the directory of models' pickle files/
     :type model_path: str
     :rtype: None
@@ -278,8 +216,6 @@ def classify_zip(
         print ('[INFO]: Model not found. No classification performed.')
         return
 
-    # Creating bin
-    bins_array  = get_bins_array(bins_number) 
 
     out_json = {} # a dictionary for classification scores for every model.
         
@@ -294,7 +230,6 @@ def classify_zip(
                                             classifier_model,
                                             metadata_json_obj,
                                             image_tagging_subfolder,
-                                            bins_array,
                                             clip_model,
                                             preprocess,
                                             device
@@ -319,7 +254,6 @@ if __name__ == '__main__':
     parser.add_argument('--output'       , type=str, required=False , default=None)
     parser.add_argument('--metadata_json', type=str, required=False , default=None)
     #parser.add_argument('--model'        , type=str, required=False, default=None)
-    parser.add_argument('--output_bins'  , type=int  ,required=False , default=10)
     parser.add_argument('--model_type'  , type=str  ,required=True)
     parser.add_argument('--tag'  , type=str  ,required=True)
 
@@ -330,7 +264,6 @@ if __name__ == '__main__':
         folder_path    = args.directory, 
         output_dir     = args.output, 
         json_file_path = args.metadata_json, 
-        bins_number    = args.output_bins,
         model_type = args.model_type, 
         tag = args.tag
         ) 

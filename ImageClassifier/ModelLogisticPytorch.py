@@ -8,7 +8,7 @@ import json
 import torch
 
 class LogisticRegressionPytorch(torch.nn.Module):
-    def __init__(self, input_dim, output_dim, date_trained=None, tag=None):
+    def __init__(self, input_dim, output_dim = 1, date_trained=None, tag=None):
         super(LogisticRegressionPytorch, self).__init__()
         self.linear = torch.nn.Linear(input_dim, output_dim)
         self.date_trained = date_trained
@@ -132,27 +132,4 @@ class LogisticRegressionPytorch(torch.nn.Module):
                 "Index 1 is class other \n\n"
                 ]
     
-    def generate_report(
-                        reports_output_folder : str,
-                        tag_name : str, 
-                        text_file_lines : List[str], 
-                        model_name: str,
-                        ):
-        """generate text file with text file lines provided, 
-        save it in output directory.
-        :param reports_output_folder: output folder for saving report file.
-        :type reports_output_folder: str
-        :param tag_name: name of the classifer tag.
-        :type tag_name: str
-        :param model_name: name of the model .
-        :type  model_name: str
-        :rtype: None. 
-        """
-
-        model_file_name = f'model-report-{model_name}-tag-{tag_name}'
-        text_file_path = os.path.join(reports_output_folder ,f'{model_file_name}.txt' )
-        with open( text_file_path ,"w+", encoding="utf-8") as f:
-            f.writelines(text_file_lines)
-        f.close()
-
-        return
+  

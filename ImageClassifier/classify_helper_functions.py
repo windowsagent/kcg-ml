@@ -669,21 +669,40 @@ def classify_to_bin_zip(
     return None 
 
 
-def file_to_hash(file_path: str):
-    """converts file (.gif or else) into blake 2b hash
+import hashlib
+
+def file_to_sha256(file_path: str):
+    """converts file (.gif or else) into SHA256 hash
 
     :param file_path: file path to be converted.
     :type file_path: str
-    :returns: blake 2b hash of the file.
+    :returns: SHA256 hash of the file.
     :rtype: str
     """
     if file_path.lower().endswith('.gif'): # If it's GIF then convert to image and exit 
-      try : 
-        return compute_blake2b(convert_gif_to_image(file_path))
-      except Exception as e:
-        print(f"[ERROR]  cannot compute hash for {file_path} , {e}")
-        return None 
-    return compute_blake2b(Image.open(file_path))
+        try: 
+            image_path = convert_gif_to_image(file_path)
+            with open(image_path, 'rb') as f:
+                hash_object = hashlib.sha256()
+                while True:
+                    chunk = f.read(65536)
+                    if not chunk:
+                        break
+                    hash_object.update(chunk)
+            return hash_object.hexdigest()
+        except Exception as e:
+            print(f"[ERROR]  cannot compute hash for {file_path} , {e}")
+            return None 
+    else:
+        with open(file_path, 'rb') as f:
+            hash_object = hashlib.sha256()
+            while True:
+                chunk = f.read(65536)
+                if not chunk:
+                    break
+                hash_object.update(chunk)
+        return hash_object.hexdigest()
+
 
 
 def file_to_hash_zip(img, img_file_name):
@@ -696,11 +715,11 @@ def file_to_hash_zip(img, img_file_name):
     """
     if img_file_name.lower().endswith('.gif'): # If it's GIF then convert to image and exit 
       try : 
-        return compute_blake2b(convert_gif_to_image(img))
+        return hash_object(convert_gif_to_image(img))
       except Exception as e:
         print(f"[ERROR]  cannot compute hash for {img_file_name} , {e}")
         return None 
-    return compute_blake2b(img)
+    return hash_object(img)
 
 
 def empty_dirs_check(dir_path : str):
